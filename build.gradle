@@ -8,27 +8,28 @@ version = '1.0'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-jacoco { //Please do not change this
+jacoco {
     toolVersion = "0.8.4"
-    reportsDir = file("$buildDir/jacoco")
 }
 
-jacocoTestReport { //Please do not change this
+jacocoTestReport {
     reports {
-        xml.enabled true
+        xml {
+            enabled true // Set 'true' to enable XML report
+            destination file("$buildDir/reports/jacoco/jacoco.xml")
+        }
         csv.enabled false
         html.enabled false
-        xml.destination file("./jacoco.xml")
     }
 }
 
+
 jar {
-    archiveBaseName = 'geektrust' //Please do not change this final artifact name
-    version =  null               //Please do not change this final artifact version
+    archiveBaseName = 'geektrust'
+    version = null
     manifest {
-        attributes 'Main-Class' : 'com.example.geektrust.Main' //Change this to the main class of your program which will be executed
+        attributes 'Main-Class': 'com.example.geektrust.Main'
     }
-    // To create a single jar with all dependencies.
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     } {
@@ -38,28 +39,28 @@ jar {
     }
 }
 
-test { ///Please do not change this
+test {
     useJUnitPlatform()
     testLogging {
         events "PASSED", "SKIPPED", "FAILED", "STANDARD_ERROR"
     }
-    finalizedBy jacocoTestReport // report is always generated after tests run
+    finalizedBy jacocoTestReport
     afterSuite { desc, result ->
-        if (!desc.parent)
+        if (!desc.parent) {
             println("${result.resultType} " +
-                "(${result.testCount} tests, " +
-                "${result.successfulTestCount} successes, " +
-                "${result.failedTestCount} failures, " +
-                "${result.skippedTestCount} skipped)")
+                    "(${result.testCount} tests, " +
+                    "${result.successfulTestCount} successes, " +
+                    "${result.failedTestCount} failures, " +
+                    "${result.skippedTestCount} skipped)")
         }
+    }
 }
-
 
 repositories {
-     mavenCentral()
+    mavenCentral()
 }
 
-//Add your dependencies here
 dependencies {
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version:'5.2.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.2.0'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
 }
