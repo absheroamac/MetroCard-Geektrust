@@ -3,6 +3,7 @@ package com.example.geektrust.controller;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,7 @@ import com.example.geektrust.services.IMetroCardService;
 import com.example.geektrust.services.JourneyService;
 import com.example.geektrust.services.MetroCardService;
 
-public class Controller {
+public class Controller implements IController {
 
     IMetroCardService metroCardService = new MetroCardService();
     IJourneyService journeyService = new JourneyService();
@@ -32,26 +33,33 @@ public class Controller {
 
     }
 
-    public void start(String filename) {
+    public void start(String filename) throws IOException {
         List<List<String>> inputs = readInput(filename);
         for (List<String> input : inputs) {
-            switch (input.get(0)) {
-                case "BALANCE":
-                    if (input.size() == 3) {
-
-                    }
-
-                    break;
-
-                default:
-                    break;
-            }
+            distributeInputs(input);
         }
     }
 
-    public List<List<String>> readInput(String filename) {
+    public void distributeInputs(List<String> input) {
+
+        switch (input.get(0)) {
+            case "BALANCE":
+                if (input.size() == 3) {
+
+                }
+
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    public List<List<String>> readInput(String filename) throws IOException {
         List<List<String>> inputs = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(getClass().getResourceAsStream(filename)))) {
 
             String line;
             while ((line = reader.readLine()) != null) {
