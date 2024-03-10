@@ -1,19 +1,18 @@
-package main.java.com.example.geektrust.controller;
+package com.example.geektrust.controller;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import main.java.com.example.geektrust.services.FareCalculationService;
-import main.java.com.example.geektrust.services.IFareCalculationService;
-import main.java.com.example.geektrust.services.IJourneyService;
-import main.java.com.example.geektrust.services.IMetroCardService;
-import main.java.com.example.geektrust.services.JourneyService;
-import main.java.com.example.geektrust.services.MetroCardService;
+import com.example.geektrust.services.FareCalculationService;
+import com.example.geektrust.services.IFareCalculationService;
+import com.example.geektrust.services.IJourneyService;
+import com.example.geektrust.services.IMetroCardService;
+import com.example.geektrust.services.JourneyService;
+import com.example.geektrust.services.MetroCardService;
 
 public class Controller {
 

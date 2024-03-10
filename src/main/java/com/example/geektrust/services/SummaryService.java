@@ -1,4 +1,4 @@
-package main.java.com.example.geektrust.services;
+package com.example.geektrust.services;
 
 public class SummaryService implements ISummaryService {
 

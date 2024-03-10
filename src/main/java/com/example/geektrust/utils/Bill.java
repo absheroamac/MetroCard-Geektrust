@@ -1,4 +1,4 @@
-package main.java.com.example.geektrust.utils;
+package com.example.geektrust.utils;
 
 public class Bill {
 

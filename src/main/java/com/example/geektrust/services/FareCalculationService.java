@@ -1,6 +1,6 @@
-package main.java.com.example.geektrust.services;
+package com.example.geektrust.services;
 
-import main.java.com.example.geektrust.utils.Bill;
+import com.example.geektrust.utils.Bill;
 
 public class FareCalculationService implements IFareCalculationService {
 

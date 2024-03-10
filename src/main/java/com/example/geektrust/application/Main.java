@@ -1,4 +1,4 @@
-package com.example.geektrust;
+package com.example.geektrust.application;
 
 public class Main {
     public static void main(String[] args) {

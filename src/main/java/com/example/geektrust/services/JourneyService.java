@@ -1,10 +1,10 @@
-package main.java.com.example.geektrust.services;
+package com.example.geektrust.services;
 
 import java.util.List;
 
-import main.java.com.example.geektrust.entities.Journey;
-import main.java.com.example.geektrust.entities.Passanger;
-import main.java.com.example.geektrust.entities.Station;
+import com.example.geektrust.entities.Journey;
+import com.example.geektrust.entities.Passanger;
+import com.example.geektrust.entities.Station;
 
 public class JourneyService implements IJourneyService {
 

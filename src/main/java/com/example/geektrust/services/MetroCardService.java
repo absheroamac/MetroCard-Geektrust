@@ -1,6 +1,6 @@
-package main.java.com.example.geektrust.services;
+package com.example.geektrust.services;
 
-import main.java.com.example.geektrust.entities.MetroCard;
+import com.example.geektrust.entities.MetroCard;
 
 public class MetroCardService implements IMetroCardService {
 

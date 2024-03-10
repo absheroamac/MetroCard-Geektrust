@@ -1,6 +1,6 @@
-package main.java.com.example.geektrust.services;
+package com.example.geektrust.services;
 
-import main.java.com.example.geektrust.entities.Journey;
+import com.example.geektrust.entities.Journey;
 
 public interface ISummaryService {
 

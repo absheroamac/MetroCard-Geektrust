@@ -1,4 +1,4 @@
-package main.java.com.example.geektrust.entities;
+package com.example.geektrust.entities;
 
 public class Journey {
 
