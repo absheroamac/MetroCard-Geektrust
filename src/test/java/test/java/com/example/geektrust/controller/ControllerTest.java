@@ -70,7 +70,7 @@ public class ControllerTest {
         controller.createMetroCard(id, balance);
 
         // assert
-        verify(metrocardService).createMetroCard(id, convertedBalance);
+        verify(metrocardService).createMetroCard(id, balance);
 
     }
 

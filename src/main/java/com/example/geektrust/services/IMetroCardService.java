@@ -1,11 +1,12 @@
 package com.example.geektrust.services;
 
 import com.example.geektrust.entities.MetroCard;
+import com.example.geektrust.utils.RechargeSummary;
 
 public interface IMetroCardService {
 
-    public MetroCard createMetroCard(String id, double balance);
+    public MetroCard createMetroCard(String id, String balance);
 
-    public MetroCard rechargeMetroCard(MetroCard metroCard, double amount);
+    public RechargeSummary rechargeMetroCard(String metroCard, double amountRequired);
 
 }
