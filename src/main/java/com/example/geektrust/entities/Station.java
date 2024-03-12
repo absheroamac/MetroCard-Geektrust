@@ -8,4 +8,8 @@ public class Station {
         this.stationType = stationType;
     }
 
+    public StationType getStationType() {
+        return stationType;
+    }
+
 }

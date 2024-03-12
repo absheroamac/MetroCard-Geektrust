@@ -11,7 +11,7 @@ public class FareCalculationService implements IFareCalculationService {
     }
 
     @Override
-    public Bill calculateFare() {
+    public double calculateFare() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'calculateFare'");
     }

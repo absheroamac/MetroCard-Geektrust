@@ -8,4 +8,8 @@ public class Passanger {
         this.passangerType = passangerType;
     }
 
+    public PassangerType getPassangerType() {
+        return this.passangerType;
+    }
+
 }
