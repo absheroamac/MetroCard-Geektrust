@@ -32,7 +32,7 @@ public class FareCalculationSummaryTest {
     @Test
     public void calculateFareShouldCalculateTheFareForKids() {
         // arrange
-        Passanger passanger = new Passanger(PassangerType.KIDS);
+        Passanger passanger = new Passanger(PassangerType.KID);
         double expected = 50;
 
         // act

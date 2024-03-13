@@ -16,15 +16,18 @@ import com.example.geektrust.utils.PassengerSummary;
 public class SummaryService implements ISummaryService {
 
     IJourneyService journeyService;
+
+    // Taking List of PassengerTypes and StationTypes
     List<PassangerType> passangerTypes = new ArrayList<>();
     List<StationType> stationTypes = new ArrayList<>();
 
+    // Available From Stations
     List<List<Journey>> fromStations = new ArrayList<>();
     List<CollectionSummary> collectionSummarys = new ArrayList<>();
 
     Map<StationType, Map<PassangerType, PassengerSummary>> mapOfPassengerSummaries = new HashMap<>();
 
-    public SummaryService(JourneyService journeyService) {
+    public SummaryService(IJourneyService journeyService) {
         this.journeyService = journeyService;
     }
 
@@ -35,58 +38,63 @@ public class SummaryService implements ISummaryService {
         // List<PassengerSummary> passengersFromCentral = new ArrayList<>();
         // List<PassengerSummary> passengersFromAirport = new ArrayList<>();
 
-        
         // List<Journey> fromCentral = journeyService.getTripsFrom(StationType.CENTRAL);
         // List<Journey> fromAirport = journeyService.getTripsFrom(StationType.AIRPORT);
 
-        // CollectionSummary centralSummary = new CollectionSummary(StationType.CENTRAL);
-        // CollectionSummary airPortSummary = new CollectionSummary(StationType.AIRPORT);
+        // CollectionSummary centralSummary = new
+        // CollectionSummary(StationType.CENTRAL);
+        // CollectionSummary airPortSummary = new
+        // CollectionSummary(StationType.AIRPORT);
 
-        for(StationType stationType:stationTypes){
-            fromStations.add(journeyService.getTripsFrom(stationType));
+        for (StationType stationType : stationTypes) {
+            if (journeyService.getTripsFrom(stationType) != null) {
+
+                fromStations.add(journeyService.getTripsFrom(stationType));
+
+            }
+
         }
 
-        for(List<Journey> journeys:fromStations){//single station
+        for (List<Journey> journeys : fromStations) {// single station
 
             StationType station = journeys.get(0).getFrom();
 
             CollectionSummary collectionSummary = new CollectionSummary(station);
-            mapOfPassengerSummaries.put(station,new HashMap<>());
-            Map<PassangerType,PassengerSummary> map = mapOfPassengerSummaries.get(station)
+            mapOfPassengerSummaries.put(station, new HashMap<>());
+            Map<PassangerType, PassengerSummary> map = mapOfPassengerSummaries.get(station);
 
-
-
-            for(Journey journey:journeys){
+            for (Journey journey : journeys) {
                 collectionSummary.addToCollection(journey.getFare());
                 collectionSummary.addToCollection(journey.getCharges());
                 collectionSummary.addToDiscount(journey.getDiscount());
                 PassangerType passangerType = journey.getPassengerType();
-                if(map.containsKey(passangerType)){
+                if (map.containsKey(passangerType)) {
                     PassengerSummary current = map.get(passangerType);
                     current.addCount();
                     map.put(passangerType, current);
+                } else {
+                    map.put(passangerType, new PassengerSummary(passangerType, 1));
                 }
-                else{
-                    map.put(passangerType,new PassengerSummary(passangerType, 1));
-                }
-                
 
             }
 
-            mapOfPassengerSummaries.put(station,map);
+            collectionSummarys.add(collectionSummary);
+
+            mapOfPassengerSummaries.put(station, map);
 
         }
 
-        // TOTAL_COLLECTION CENTRAL 300 0 
+        // TOTAL_COLLECTION CENTRAL 300 0
         // PASSENGER_TYPE_SUMMARY
         // ADULT 1
         // SENIOR_CITIZEN 1
-        // TOTAL_COLLECTION AIRPORT  403 100 
+        // TOTAL_COLLECTION AIRPORT 403 100
         // PASSENGER_TYPE_SUMMARY
         // ADULT 2
-        // KID 2 
-        
-        //throw new UnsupportedOperationException("Unimplemented method 'buildSummary'");
+        // KID 2
+
+        // throw new UnsupportedOperationException("Unimplemented method
+        // 'buildSummary'");
     }
 
     @Override
@@ -107,10 +115,41 @@ public class SummaryService implements ISummaryService {
             }
             Collections.sort(passengerSummaries);
 
-            answer += "TOTAL_COLLECTION " + station.toString() + " " + summary.getTotalCollection();
+            answer += "TOTAL_COLLECTION " + station.toString() + " " + (int) summary.getTotalCollection() + " "
+                    + (int) summary.getTotalDiscount() + "\n";
+            answer += "PASSENGER_TYPE_SUMMARY\n";
+
+            for (PassengerSummary passengerSummary : passengerSummaries) {
+                answer += passengerSummary.getPassenger() + " " + passengerSummary.getCount() + "\n";
+            }
 
         }
 
+        System.out.println(answer);
+
+    }
+
+    public void setTypes(List<PassangerType> passangerTypes, List<StationType> stationTypes) {
+        this.passangerTypes = passangerTypes;
+        this.stationTypes = stationTypes;
+    }
+
+    public List<CollectionSummary> getCollectionSummary() {
+
+        return collectionSummarys;
+
+    }
+
+    public Map<StationType, Map<PassangerType, PassengerSummary>> getPassengerSummary() {
+        return mapOfPassengerSummaries;
+    }
+
+    public void setCollectionSummarys(List<CollectionSummary> collectionSummaries) {
+        this.collectionSummarys = collectionSummaries;
+    }
+
+    public void setPassengerSummary(Map<StationType, Map<PassangerType, PassengerSummary>> passengerSummaries) {
+        this.mapOfPassengerSummaries = passengerSummaries;
     }
 
 }

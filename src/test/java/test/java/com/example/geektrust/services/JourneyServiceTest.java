@@ -51,7 +51,7 @@ public class JourneyServiceTest {
     public void getTripsFromShouldReturnListOfTripsFromInputedStation() {
         // Arrange
         MetroCard metroCard = new MetroCard("MC1", 200);
-        Passanger passanger = new Passanger(PassangerType.KIDS);
+        Passanger passanger = new Passanger(PassangerType.KID);
         Station station = new Station(StationType.AIRPORT);
 
         Journey journey = new Journey(passanger, station, station, 50, 0);
@@ -63,7 +63,7 @@ public class JourneyServiceTest {
         journeyService.setJourneysMap(journeysMap);
 
         //
-        List<Journey> actual = journeyService.getTripsFrom(new Station(StationType.AIRPORT));
+        List<Journey> actual = journeyService.getTripsFrom(StationType.AIRPORT);
 
         assertEquals(journeys, actual);
 
