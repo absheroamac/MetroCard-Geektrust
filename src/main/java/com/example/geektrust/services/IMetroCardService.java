@@ -9,4 +9,6 @@ public interface IMetroCardService {
 
     public RechargeSummary rechargeMetroCard(String metroCard, double amountRequired);
 
+    public MetroCard getCard(String id);
+
 }

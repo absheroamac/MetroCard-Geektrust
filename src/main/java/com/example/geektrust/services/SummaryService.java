@@ -1,7 +1,6 @@
 package com.example.geektrust.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +32,6 @@ public class SummaryService implements ISummaryService {
 
     @Override
     public void buildSummary() {
-        // TODO Auto-generated method stub
 
         // List<PassengerSummary> passengersFromCentral = new ArrayList<>();
         // List<PassengerSummary> passengersFromAirport = new ArrayList<>();

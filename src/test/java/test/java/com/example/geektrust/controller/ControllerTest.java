@@ -2,12 +2,10 @@ package test.java.com.example.geektrust.controller;
 
 import java.util.List;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.spy;
@@ -19,13 +17,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.internal.matchers.Any;
-import org.mockito.internal.matchers.Null;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.geektrust.controller.Controller;
-import com.example.geektrust.controller.IController;
-import com.example.geektrust.entities.Journey;
 import com.example.geektrust.entities.MetroCard;
 import com.example.geektrust.entities.Passanger;
 import com.example.geektrust.entities.PassangerType;
@@ -35,7 +29,6 @@ import com.example.geektrust.services.IFareCalculationService;
 import com.example.geektrust.services.IJourneyService;
 import com.example.geektrust.services.IMetroCardService;
 import com.example.geektrust.services.ISummaryService;
-import com.example.geektrust.services.SummaryService;
 
 @ExtendWith(MockitoExtension.class)
 public class ControllerTest {

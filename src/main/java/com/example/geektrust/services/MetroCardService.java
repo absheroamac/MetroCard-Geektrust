@@ -11,18 +11,35 @@ public class MetroCardService implements IMetroCardService {
 
     @Override
     public MetroCard createMetroCard(String id, String balance) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createMetroCard'");
+
+        if (cards.containsKey(id)) {
+            return cards.get(id);
+        } else {
+            MetroCard card = new MetroCard(id, Double.parseDouble(balance));
+            cards.put(balance, card);
+            return card;
+
+        }
+
     }
 
     @Override
     public RechargeSummary rechargeMetroCard(String id, double amountRequired) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'rechargeMetroCard'");
+        MetroCard card = cards.get(id);
+        double charges = amountRequired * 0.02;
+        card.addBalance(amountRequired);
+        RechargeSummary rechargeSummary = new RechargeSummary(card, charges);
+
+        cards.put(id, card);
+        return rechargeSummary;
     }
 
     public void setMetroCards(Map<String, MetroCard> cards) {
         this.cards = cards;
+    }
+
+    public MetroCard getCard(String id) {
+        return cards.get(id);
     }
 
 }

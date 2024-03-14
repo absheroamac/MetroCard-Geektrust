@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.geektrust.entities.MetroCard;
-import com.example.geektrust.services.IMetroCardService;
+
 import com.example.geektrust.services.MetroCardService;
 import com.example.geektrust.utils.RechargeSummary;
 

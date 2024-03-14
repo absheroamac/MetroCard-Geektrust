@@ -3,7 +3,6 @@ package com.example.geektrust.utils;
 import java.util.Objects;
 
 import com.example.geektrust.entities.PassangerType;
-import com.example.geektrust.entities.StationType;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +30,6 @@ public class PassengerSummary implements Comparable<PassengerSummary> {
 
     @Override
     public int compareTo(PassengerSummary o) {
-        // TODO Auto-generated method stub
         if (this.getCount() == o.getCount()) {
             Map<String, Integer> hierarchy = new HashMap<>();
             hierarchy.put("ADULT", 3);

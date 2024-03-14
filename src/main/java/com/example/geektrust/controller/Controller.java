@@ -1,19 +1,26 @@
 package com.example.geektrust.controller;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.example.geektrust.entities.MetroCard;
+import com.example.geektrust.entities.Passanger;
+import com.example.geektrust.entities.PassangerType;
+import com.example.geektrust.entities.Station;
+import com.example.geektrust.entities.StationType;
 import com.example.geektrust.services.FareCalculationService;
 import com.example.geektrust.services.IFareCalculationService;
 import com.example.geektrust.services.IJourneyService;
 import com.example.geektrust.services.IMetroCardService;
 import com.example.geektrust.services.JourneyService;
 import com.example.geektrust.services.MetroCardService;
+import com.example.geektrust.services.SummaryService;
+import com.example.geektrust.utils.Bill;
+import com.example.geektrust.utils.RechargeSummary;
 
 public class Controller implements IController {
 
@@ -23,13 +30,35 @@ public class Controller implements IController {
 
     public void createMetroCard(String id, String balance) {
 
+        metroCardService.createMetroCard(id, balance);
+
     }
 
     public void createJourney(String id, String passengerType, String fromStation) {
 
+        Passanger passanger = new Passanger(PassangerType.valueOf(passengerType));
+        Station station = new Station(StationType.valueOf(fromStation));
+
+        MetroCard metroCard = metroCardService.getCard(id);
+        Bill bill = fareCalculationService.getBill(passanger, metroCard);
+        double payable = bill.getFare() - bill.getDiscount();
+        if (payable < metroCard.getBalance()) {
+
+            RechargeSummary rechargeSummary = metroCardService.rechargeMetroCard(fromStation, payable);
+            journeyService.createJourney(metroCard, passanger, station, bill.getFare(), bill.getDiscount(),
+                    rechargeSummary.getCharges());
+
+        } else {
+            journeyService.createJourney(metroCard, passanger, station, bill.getFare(), bill.getDiscount(), 0);
+        }
+
     }
 
     public void printSummary() {
+
+        SummaryService summaryService = new SummaryService(journeyService);
+        summaryService.buildSummary();
+        summaryService.printSummary();
 
     }
 
@@ -46,9 +75,23 @@ public class Controller implements IController {
             case "BALANCE":
                 if (input.size() == 3) {
 
+                    createMetroCard(input.get(1), input.get(2));
+
                 }
 
                 break;
+            case "CHECK_IN":
+                if (input.size() == 4) {
+
+                    createJourney(input.get(1), input.get(2), input.get(3));
+
+                }
+                break;
+
+            case "PRINT_SUMMARY":
+                if (input.size() == 1) {
+                    printSummary();
+                }
 
             default:
                 break;
