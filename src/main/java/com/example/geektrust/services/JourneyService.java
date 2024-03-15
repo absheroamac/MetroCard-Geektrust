@@ -65,7 +65,7 @@ public class JourneyService implements IJourneyService {
 
     @Override
     public List<Journey> getTripsFrom(StationType station) {
-        return journeysFromMap.getOrDefault(station, Collections.EMPTY_LIST);
+        return journeysMap.getOrDefault(station.toString(), Collections.EMPTY_LIST);
     }
 
     public List<Journey> getJourneysOf(String id) {

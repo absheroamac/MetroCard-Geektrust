@@ -32,8 +32,9 @@ public class JourneyServiceTest {
         MetroCard metroCard = new MetroCard("MC1", 200);
         Passanger passanger = new Passanger(PassangerType.ADULT);
         Station station = new Station(StationType.CENTRAL);
+        Station to = new Station(StationType.AIRPORT);
 
-        Journey expected = new Journey(passanger, station, station, 200, 0);
+        Journey expected = new Journey(passanger, station, to, 200, 0, 0);
 
         Map<String, Journey> journeys = new HashMap<>();
         // journeys.put("MC1",expected);

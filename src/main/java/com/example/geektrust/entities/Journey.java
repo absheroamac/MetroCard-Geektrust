@@ -1,5 +1,7 @@
 package com.example.geektrust.entities;
 
+import java.util.Objects;
+
 public class Journey {
 
     Passanger passanger;
@@ -48,11 +50,29 @@ public class Journey {
 
     }
 
-    public boolean equals(Object obj){
-        if(this==obj){
+    public StationType getTo() {
+        return to.getStationType();
+    }
+
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if(obj==null != )
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Journey that = (Journey) obj;
+        return this.getCharges() == that.getCharges() && this.getFare() == that.getFare()
+                && this.getDiscount() == that.getDiscount() && this.getFrom() == that.getFrom()
+                && this.getPassengerType() == that.getPassengerType() && this.getTo() == that.getTo();
+
+    }
+
+    public int hashCode() {
+        return Objects.hash(this.getFare(), this.getCharges(), this.getDiscount(), this.getFrom(),
+                this.getPassengerType(),
+                this.getTo());
     }
 
 }

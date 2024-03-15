@@ -7,16 +7,18 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.geektrust.entities.MetroCard;
-
+import com.example.geektrust.services.IMetroCardService;
 import com.example.geektrust.services.MetroCardService;
 import com.example.geektrust.utils.RechargeSummary;
 
 @ExtendWith(MockitoExtension.class)
 public class MetroCardServiceTest {
 
+    @InjectMocks
     MetroCardService metroCardService;
 
     @Test
@@ -26,6 +28,7 @@ public class MetroCardServiceTest {
         String balance = "200";
         double convertedBalance = Double.parseDouble(balance);
         MetroCard expected = new MetroCard(id, convertedBalance);
+        metroCardService.setMetroCards(new HashMap<String, MetroCard>());
 
         // act
         MetroCard actual = metroCardService.createMetroCard(id, balance);

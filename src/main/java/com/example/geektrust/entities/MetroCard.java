@@ -30,4 +30,17 @@ public class MetroCard {
         return balance;
     }
 
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        MetroCard that = (MetroCard) obj;
+        return this.getId() == that.getId() && this.getBalance() == that.getBalance();
+    }
+
 }

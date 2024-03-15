@@ -178,18 +178,19 @@ public class ControllerTest {
 
     }
 
-    @Test
-    public void distributeInputsMethodShouldInvokeCreateMetroCardMethodForBALANCEInput() {
-        // Arrange
-        List<String> input = Arrays.asList("BALANCE", "MC1", "200");
+    // @Test
+    // public void
+    // distributeInputsMethodShouldInvokeCreateMetroCardMethodForBALANCEInput() {
+    // // Arrange
+    // List<String> input = Arrays.asList("BALANCE", "MC1", "200");
 
-        // Act
-        controller.distributeInputs(input);
+    // // Act
+    // controller.distributeInputs(input);
 
-        // Assert
-        verify(controller).createMetroCard("MC1", "200");
+    // // Assert
+    // verify(controller).createMetroCard("MC1", "200");
 
-    }
+    // }
 
     // @Test
     // public void

@@ -72,3 +72,9 @@ dependencies {
     testImplementation 'org.mockito:mockito-junit-jupiter:3.12.4'
 
 }
+
+task runTask(type: JavaExec) {
+    main = 'com.example.geektrust.application.Main'
+    classpath = sourceSets.main.runtimeClasspath
+    args 'input.txt'
+}

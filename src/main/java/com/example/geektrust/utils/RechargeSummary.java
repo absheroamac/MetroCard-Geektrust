@@ -19,4 +19,17 @@ public class RechargeSummary {
         return this.metroCard;
     }
 
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        RechargeSummary that = (RechargeSummary) obj;
+        return this.getMetroCard() == that.getMetroCard() && this.getCharges() == that.getCharges();
+    }
+
 }
