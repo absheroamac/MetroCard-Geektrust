@@ -13,4 +13,5 @@ public interface IController {
 
     public List<List<String>> readInput(String filename) throws IOException;
 
+    public void distributeInputs(List<String> input);
 }

@@ -16,6 +16,7 @@ import com.example.geektrust.services.FareCalculationService;
 import com.example.geektrust.services.IFareCalculationService;
 import com.example.geektrust.services.IJourneyService;
 import com.example.geektrust.services.IMetroCardService;
+import com.example.geektrust.services.ISummaryService;
 import com.example.geektrust.services.JourneyService;
 import com.example.geektrust.services.MetroCardService;
 import com.example.geektrust.services.SummaryService;
@@ -27,6 +28,7 @@ public class Controller implements IController {
     IMetroCardService metroCardService = new MetroCardService();
     IJourneyService journeyService = new JourneyService();
     IFareCalculationService fareCalculationService = new FareCalculationService(journeyService);
+    ISummaryService summaryService = new SummaryService(journeyService);
 
     public void createMetroCard(String id, String balance) {
 
@@ -56,7 +58,6 @@ public class Controller implements IController {
 
     public void printSummary() {
 
-        SummaryService summaryService = new SummaryService(journeyService);
         summaryService.buildSummary();
         summaryService.printSummary();
 

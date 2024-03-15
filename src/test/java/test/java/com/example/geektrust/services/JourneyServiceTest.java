@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.geektrust.entities.Journey;
@@ -22,6 +23,7 @@ import com.example.geektrust.services.JourneyService;
 @ExtendWith(MockitoExtension.class)
 public class JourneyServiceTest {
 
+    @InjectMocks
     JourneyService journeyService;
 
     @Test
@@ -39,7 +41,7 @@ public class JourneyServiceTest {
         journeyService.setJourneys(journeys);
 
         // act
-        Journey actual = journeyService.createJourney(metroCard, passanger, station);
+        Journey actual = journeyService.createJourney(metroCard, passanger, station, 200, 0, 0);
 
         // assert
         assertEquals(expected, actual);

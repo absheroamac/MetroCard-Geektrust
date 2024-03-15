@@ -4,15 +4,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.geektrust.entities.Passanger;
 import com.example.geektrust.entities.PassangerType;
 import com.example.geektrust.services.FareCalculationService;
+import com.example.geektrust.services.IJourneyService;
 
 @ExtendWith(MockitoExtension.class)
 public class FareCalculationSummaryTest {
 
+    @Mock
+    IJourneyService journeyService;
+
+    @InjectMocks
     FareCalculationService fareCalculation;
 
     @Test
