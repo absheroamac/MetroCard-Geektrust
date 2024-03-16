@@ -59,9 +59,9 @@ public class JourneyServiceTest {
         Journey journey = new Journey(passanger, station, station, 50, 0);
 
         List<Journey> journeys = Arrays.asList(journey);
-        Map<String, List<Journey>> journeysMap = new HashMap<>();
+        Map<StationType, List<Journey>> journeysMap = new HashMap<>();
 
-        journeysMap.put("AIRPORT", journeys);
+        journeysMap.put(StationType.AIRPORT, journeys);
         journeyService.setJourneysMap(journeysMap);
 
         //

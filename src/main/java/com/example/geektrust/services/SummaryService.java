@@ -58,11 +58,13 @@ public class SummaryService implements ISummaryService {
             StationType station = journeys.get(0).getFrom();
 
             CollectionSummary collectionSummary = new CollectionSummary(station);
+
             mapOfPassengerSummaries.put(station, new HashMap<>());
             Map<PassangerType, PassengerSummary> map = mapOfPassengerSummaries.get(station);
 
             for (Journey journey : journeys) {
-                collectionSummary.addToCollection(journey.getFare());
+                // System.out.println(journey);
+                collectionSummary.addToCollection(journey.getFare() - journey.getDiscount());
                 collectionSummary.addToCollection(journey.getCharges());
                 collectionSummary.addToDiscount(journey.getDiscount());
                 PassangerType passangerType = journey.getPassengerType();
@@ -77,6 +79,7 @@ public class SummaryService implements ISummaryService {
             }
 
             collectionSummarys.add(collectionSummary);
+            // System.out.println(collectionSummary);
 
             mapOfPassengerSummaries.put(station, map);
 

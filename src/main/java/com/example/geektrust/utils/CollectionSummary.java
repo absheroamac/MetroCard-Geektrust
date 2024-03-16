@@ -62,4 +62,11 @@ public class CollectionSummary {
         return Objects.hash(station, totalCollection, totalDiscount);
     }
 
+    @Override
+    public String toString() {
+
+        return station.toString() + " " + totalCollection + " " + totalDiscount;
+
+    }
+
 }

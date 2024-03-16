@@ -75,4 +75,11 @@ public class Journey {
                 this.getTo());
     }
 
+    public String toString() {
+
+        return passanger.getPassangerType() + " " + from.getStationType() + " " + to.getStationType() + " " + fare + " "
+                + discount + " " + charges;
+
+    }
+
 }

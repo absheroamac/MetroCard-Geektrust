@@ -87,8 +87,8 @@ public class JourneyService implements IJourneyService {
         this.journeys = journeys;
     }
 
-    public void setJourneysMap(Map<String, List<Journey>> journeysMap) {
-        this.journeysMap = journeysMap;
+    public void setJourneysMap(Map<StationType, List<Journey>> journeysMap) {
+        this.journeysFromMap = journeysMap;
     }
 
 }

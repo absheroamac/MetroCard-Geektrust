@@ -57,7 +57,7 @@ public class Controller implements IController {
         double payable = bill.getFare() - bill.getDiscount();
         if (payable > metroCard.getBalance()) {
 
-            RechargeSummary rechargeSummary = metroCardService.rechargeMetroCard(id, payable);
+            RechargeSummary rechargeSummary = metroCardService.rechargeMetroCard(id, payable - metroCard.getBalance());
             journeyService.createJourney(metroCard, passanger, station, bill.getFare(), bill.getDiscount(),
                     rechargeSummary.getCharges());
 
@@ -78,7 +78,7 @@ public class Controller implements IController {
 
     public void start(String filename) throws IOException {
         List<List<String>> inputs = readInput(filename);
-        System.out.println(inputs.toString());
+        // System.out.println(inputs.toString());
         for (List<String> input : inputs) {
             distributeInputs(input);
         }
@@ -86,7 +86,7 @@ public class Controller implements IController {
 
     public void distributeInputs(List<String> input) {
 
-        System.out.println(input.toString());
+        // System.out.println(input.toString());
 
         switch (input.get(0)) {
             case "BALANCE":
@@ -125,7 +125,7 @@ public class Controller implements IController {
 
             while ((line = reader.readLine()) != null) {
 
-                System.out.println(line);
+                // System.out.println(line);
 
                 inputs.add(Arrays.asList(line.split(" ")));
             }
