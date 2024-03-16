@@ -10,6 +10,6 @@ public class Main {
 
         String input = args[0];
         String localTest = "/input.txt";
-        controller.start(input);
+        controller.start("/" + input);
     }
 }
