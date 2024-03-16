@@ -73,11 +73,7 @@ dependencies {
 
 }
 
-task runTask(type: JavaExec) {
-    main = 'com.example.geektrust.application.Main'
-    classpath = sourceSets.main.runtimeClasspath
-    args "input.txt"
-}
+
 
 sourceSets {
     main {
