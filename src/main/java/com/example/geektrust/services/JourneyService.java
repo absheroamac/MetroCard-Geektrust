@@ -3,6 +3,7 @@ package com.example.geektrust.services;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -14,7 +15,7 @@ import com.example.geektrust.entities.StationType;
 
 public class JourneyService implements IJourneyService {
 
-    Map<String, Journey> journeys;
+    Map<String, Journey> journeys = new HashMap<>();
     Map<String, List<Journey>> journeysMap = new HashMap<>();
     // Map<PassangerType, List<Journey>> passangerJourneyMap = new HashMap<>();
     // Map<StationType, Double> collectedFees = new HashMap<>();
@@ -24,7 +25,6 @@ public class JourneyService implements IJourneyService {
     public Journey createJourney(MetroCard metrocard, Passanger passanger, Station from) {
         // String id = metrocard.getId();
 
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createJourney'");
     }
 
@@ -44,32 +44,39 @@ public class JourneyService implements IJourneyService {
         Journey journey = new Journey(passanger, from, toStation, fare, discount, charges);
 
         if (journeysMap.containsKey(id)) {
+
             List<Journey> current = journeysMap.get(id);
             current.add(journey);
             journeysMap.put(id, current);
         } else {
-            journeysMap.put(id, Arrays.asList(journey));
+            List<Journey> arrayList = new ArrayList<>();
+            arrayList.add(journey);
+            journeysMap.put(id, arrayList);
         }
 
         if (journeysFromMap.containsKey(journey.getFrom())) {
-            List<Journey> current = journeysFromMap.get(journey.getFrom());
+            List<Journey> current = journeysFromMap.getOrDefault(journey.getFrom(), new ArrayList<>());
             current.add(journey);
             journeysFromMap.put(journey.getFrom(), current);
+
         }
 
         else {
-            journeysFromMap.put(journey.getFrom(), Arrays.asList(journey));
+            List<Journey> arrayList = new ArrayList<>();
+            arrayList.add(journey);
+            journeysFromMap.put(journey.getFrom(), arrayList);
         }
         return journey;
     }
 
     @Override
     public List<Journey> getTripsFrom(StationType station) {
-        return journeysMap.getOrDefault(station.toString(), Collections.EMPTY_LIST);
+        return journeysFromMap.get(station);
     }
 
     public List<Journey> getJourneysOf(String id) {
-        return journeysMap.getOrDefault(id, Collections.EMPTY_LIST);
+        List<Journey> defult = new ArrayList<>();
+        return journeysMap.getOrDefault(id, defult);
     }
 
     // public Map<StationType, Double> getCharges() {
@@ -77,9 +84,7 @@ public class JourneyService implements IJourneyService {
     // }
 
     public void setJourneys(Map<String, Journey> journeys) {
-
         this.journeys = journeys;
-
     }
 
     public void setJourneysMap(Map<String, List<Journey>> journeysMap) {

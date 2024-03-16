@@ -1,5 +1,6 @@
 package com.example.geektrust.services;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.example.geektrust.entities.MetroCard;
@@ -9,6 +10,10 @@ public class MetroCardService implements IMetroCardService {
 
     Map<String, MetroCard> cards;
 
+    public MetroCardService() {
+        cards = new HashMap<>();
+    }
+
     @Override
     public MetroCard createMetroCard(String id, String balance) {
 
@@ -16,7 +21,7 @@ public class MetroCardService implements IMetroCardService {
             return cards.get(id);
         } else {
             MetroCard card = new MetroCard(id, Double.parseDouble(balance));
-            cards.put(balance, card);
+            cards.put(card.getId(), card);
             return card;
 
         }
@@ -32,6 +37,12 @@ public class MetroCardService implements IMetroCardService {
 
         cards.put(id, card);
         return rechargeSummary;
+    }
+
+    public void deductAmount(String id, double amount) {
+        MetroCard card = cards.get(id);
+        card.setBalance(card.getBalance() - amount);
+        cards.put(id, card);
     }
 
     public void setMetroCards(Map<String, MetroCard> cards) {

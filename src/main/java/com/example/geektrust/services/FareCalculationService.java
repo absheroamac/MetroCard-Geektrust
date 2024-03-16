@@ -42,6 +42,12 @@ public class FareCalculationService implements IFareCalculationService {
 
         double discount;
 
+        if (journeyService.getJourneysOf(metroCard.getId()) == null) {
+
+            return 0;
+
+        }
+
         List<Journey> journeys = journeyService.getJourneysOf(metroCard.getId());
 
         if (journeys.size() == 0 || journeys.size() % 2 == 0) {

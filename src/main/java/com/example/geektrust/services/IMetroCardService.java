@@ -11,4 +11,6 @@ public interface IMetroCardService {
 
     public MetroCard getCard(String id);
 
+    public void deductAmount(String id, double amount);
+
 }

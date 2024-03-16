@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.io.FileInputStream;
+import java.util.Scanner;
 
 import com.example.geektrust.entities.MetroCard;
 import com.example.geektrust.entities.Passanger;
@@ -30,6 +32,15 @@ public class Controller implements IController {
     IFareCalculationService fareCalculationService = new FareCalculationService(journeyService);
     ISummaryService summaryService = new SummaryService(journeyService);
 
+    public Controller() {
+
+        List<PassangerType> passangerTypes = Arrays.asList(PassangerType.ADULT, PassangerType.KID,
+                PassangerType.SENIOR_CITIZEN);
+        List<StationType> stationTypes = Arrays.asList(StationType.CENTRAL, StationType.AIRPORT);
+        summaryService.setTypes(passangerTypes, stationTypes);
+
+    }
+
     public void createMetroCard(String id, String balance) {
 
         metroCardService.createMetroCard(id, balance);
@@ -44,15 +55,17 @@ public class Controller implements IController {
         MetroCard metroCard = metroCardService.getCard(id);
         Bill bill = fareCalculationService.getBill(passanger, metroCard);
         double payable = bill.getFare() - bill.getDiscount();
-        if (payable < metroCard.getBalance()) {
+        if (payable > metroCard.getBalance()) {
 
-            RechargeSummary rechargeSummary = metroCardService.rechargeMetroCard(fromStation, payable);
+            RechargeSummary rechargeSummary = metroCardService.rechargeMetroCard(id, payable);
             journeyService.createJourney(metroCard, passanger, station, bill.getFare(), bill.getDiscount(),
                     rechargeSummary.getCharges());
 
         } else {
             journeyService.createJourney(metroCard, passanger, station, bill.getFare(), bill.getDiscount(), 0);
         }
+
+        metroCardService.deductAmount(id, payable);
 
     }
 
@@ -65,12 +78,15 @@ public class Controller implements IController {
 
     public void start(String filename) throws IOException {
         List<List<String>> inputs = readInput(filename);
+        System.out.println(inputs.toString());
         for (List<String> input : inputs) {
             distributeInputs(input);
         }
     }
 
     public void distributeInputs(List<String> input) {
+
+        System.out.println(input.toString());
 
         switch (input.get(0)) {
             case "BALANCE":
@@ -106,14 +122,17 @@ public class Controller implements IController {
                 new InputStreamReader(getClass().getResourceAsStream(filename)))) {
 
             String line;
+
             while ((line = reader.readLine()) != null) {
+
+                System.out.println(line);
 
                 inputs.add(Arrays.asList(line.split(" ")));
             }
 
         } catch (IOException e) {
             System.out.println("Error handling file \n" + e.getMessage());
-            return null;
+            // return null;
 
         }
 
