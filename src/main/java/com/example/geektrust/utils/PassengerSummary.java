@@ -30,6 +30,9 @@ public class PassengerSummary implements Comparable<PassengerSummary> {
 
     @Override
     public int compareTo(PassengerSummary o) {
+        if (this.getCount() < o.getCount()) {
+            return 1;
+        }
         if (this.getCount() == o.getCount()) {
             Map<String, Integer> hierarchy = new HashMap<>();
             hierarchy.put("ADULT", 3);
