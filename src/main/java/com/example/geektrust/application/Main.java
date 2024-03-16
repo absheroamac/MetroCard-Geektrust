@@ -9,7 +9,7 @@ public class Main {
         Controller controller = new Controller();
 
         String input = args[0];
-        String localTest = "/input.txt";
-        controller.start("/" + input);
+        String localTest = "input.txt";
+        controller.start(input);
     }
 }

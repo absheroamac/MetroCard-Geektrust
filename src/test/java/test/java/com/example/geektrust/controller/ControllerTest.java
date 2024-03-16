@@ -123,88 +123,94 @@ public class ControllerTest {
 
     }
 
-    @Test
-    public void readInputMethodShouldReadTheFileAndGiveListOfCommends() throws IOException {
-        String filename = "/input.txt";
-        List<String> input1 = Arrays.asList("BALANCE", "MC1", "400");
-        List<String> input2 = Arrays.asList("BALANCE", "MC2", "100");
-        List<String> input3 = Arrays.asList("BALANCE", "MC3", "50");
-        List<String> input4 = Arrays.asList("BALANCE", "MC4", "50");
-        List<String> input5 = Arrays.asList("CHECK_IN", "MC1", "SENIOR_CITIZEN", "AIRPORT");
-        List<String> input6 = Arrays.asList("CHECK_IN", "MC2", "KID", "AIRPORT");
-        List<String> input7 = Arrays.asList("CHECK_IN", "MC3", "ADULT", "CENTRAL");
-        List<String> input8 = Arrays.asList("CHECK_IN", "MC1", "SENIOR_CITIZEN", "CENTRAL");
-        List<String> input9 = Arrays.asList("CHECK_IN", "MC3", "ADULT", "AIRPORT");
-        List<String> input10 = Arrays.asList("CHECK_IN", "MC3", "ADULT", "CENTRAL");
-        List<String> input11 = Arrays.asList("PRINT_SUMMARY");
-
-        List<List<String>> expected = Arrays.asList(input1, input2, input3, input4, input5, input6, input7, input8,
-                input9, input10, input11);
-
-        // Act
-        List<List<String>> actual = controller.readInput(filename);
-
-        // Assert
-        assertEquals(expected, actual);
-
-    }
-
-    @Test
-    public void readInputMethodShouldReturnIOExceptionForWrongFileName() {
-        String filename = "/inputs.txt";
-        List<String> input1 = Arrays.asList("BALANCE", "MC1", "400");
-        List<String> input2 = Arrays.asList("BALANCE", "MC2", "100");
-        List<String> input3 = Arrays.asList("BALANCE", "MC3", "50");
-        List<String> input4 = Arrays.asList("BALANCE", "MC4", "50");
-        List<String> input5 = Arrays.asList("CHECK_IN", "MC1", "SENIOR_CITIZEN", "AIRPORT");
-        List<String> input6 = Arrays.asList("CHECK_IN", "MC2", "KID", "AIRPORT");
-        List<String> input7 = Arrays.asList("CHECK_IN", "MC3", "ADULT", "CENTRAL");
-        List<String> input8 = Arrays.asList("CHECK_IN", "MC1", "SENIOR_CITIZEN", "CENTRAL");
-        List<String> input9 = Arrays.asList("CHECK_IN", "MC3", "ADULT", "AIRPORT");
-        List<String> input10 = Arrays.asList("CHECK_IN", "MC3", "ADULT", "CENTRAL");
-        List<String> input11 = Arrays.asList("PRINT_SUMMARY");
-
-        List<List<String>> expected = Arrays.asList(input1, input2, input3, input4, input5, input6, input7, input8,
-                input9, input10, input11);
-
-        // Act
-
-        // Assert
-        assertThrows(NullPointerException.class, () -> {
-
-            controller.readInput(filename);
-
-        });
-
-    }
-
     // @Test
-    // public void
-    // distributeInputsMethodShouldInvokeCreateMetroCardMethodForBALANCEInput() {
-    // // Arrange
-    // List<String> input = Arrays.asList("BALANCE", "MC1", "200");
+    // public void readInputMethodShouldReadTheFileAndGiveListOfCommends() throws
+    // IOException {
+    // String filename = "/input.txt";
+    // List<String> input1 = Arrays.asList("BALANCE", "MC1", "400");
+    // List<String> input2 = Arrays.asList("BALANCE", "MC2", "100");
+    // List<String> input3 = Arrays.asList("BALANCE", "MC3", "50");
+    // List<String> input4 = Arrays.asList("BALANCE", "MC4", "50");
+    // List<String> input5 = Arrays.asList("CHECK_IN", "MC1", "SENIOR_CITIZEN",
+    // "AIRPORT");
+    // List<String> input6 = Arrays.asList("CHECK_IN", "MC2", "KID", "AIRPORT");
+    // List<String> input7 = Arrays.asList("CHECK_IN", "MC3", "ADULT", "CENTRAL");
+    // List<String> input8 = Arrays.asList("CHECK_IN", "MC1", "SENIOR_CITIZEN",
+    // "CENTRAL");
+    // List<String> input9 = Arrays.asList("CHECK_IN", "MC3", "ADULT", "AIRPORT");
+    // List<String> input10 = Arrays.asList("CHECK_IN", "MC3", "ADULT", "CENTRAL");
+    // List<String> input11 = Arrays.asList("PRINT_SUMMARY");
+
+    // List<List<String>> expected = Arrays.asList(input1, input2, input3, input4,
+    // input5, input6, input7, input8,
+    // input9, input10, input11);
 
     // // Act
-    // controller.distributeInputs(input);
+    // List<List<String>> actual = controller.readInput(filename);
 
     // // Assert
-    // verify(controller).createMetroCard("MC1", "200");
+    // assertEquals(expected, actual);
 
     // }
 
     // @Test
-    // public void
-    // distributeInputsMethodShouldInvokeCreateJourneyMethodForCHECK_INInput() {
-    // List<String> input = Arrays.asList("CHECK_IN", "MC1", "ADULT", "CENTRAL");
+    // public void readInputMethodShouldReturnIOExceptionForWrongFileName() {
+    // String filename = "/inputs.txt";
+    // List<String> input1 = Arrays.asList("BALANCE", "MC1", "400");
+    // List<String> input2 = Arrays.asList("BALANCE", "MC2", "100");
+    // List<String> input3 = Arrays.asList("BALANCE", "MC3", "50");
+    // List<String> input4 = Arrays.asList("BALANCE", "MC4", "50");
+    // List<String> input5 = Arrays.asList("CHECK_IN", "MC1", "SENIOR_CITIZEN",
+    // "AIRPORT");
+    // List<String> input6 = Arrays.asList("CHECK_IN", "MC2", "KID", "AIRPORT");
+    // List<String> input7 = Arrays.asList("CHECK_IN", "MC3", "ADULT", "CENTRAL");
+    // List<String> input8 = Arrays.asList("CHECK_IN", "MC1", "SENIOR_CITIZEN",
+    // "CENTRAL");
+    // List<String> input9 = Arrays.asList("CHECK_IN", "MC3", "ADULT", "AIRPORT");
+    // List<String> input10 = Arrays.asList("CHECK_IN", "MC3", "ADULT", "CENTRAL");
+    // List<String> input11 = Arrays.asList("PRINT_SUMMARY");
+
+    // List<List<String>> expected = Arrays.asList(input1, input2, input3, input4,
+    // input5, input6, input7, input8,
+    // input9, input10, input11);
 
     // // Act
-    // controller.distributeInputs(input);
 
     // // Assert
-    // verify(controller, times(1)).createJourney("MC1", "ADULT", "CENTRAL");
+    // assertThrows(NullPointerException.class, () -> {
 
-    // }
+    // controller.readInput(filename);
+
+    // });
+
 }
+
+// @Test
+// public void
+// distributeInputsMethodShouldInvokeCreateMetroCardMethodForBALANCEInput() {
+// // Arrange
+// List<String> input = Arrays.asList("BALANCE", "MC1", "200");
+
+// // Act
+// controller.distributeInputs(input);
+
+// // Assert
+// verify(controller).createMetroCard("MC1", "200");
+
+// }
+
+// @Test
+// public void
+// distributeInputsMethodShouldInvokeCreateJourneyMethodForCHECK_INInput() {
+// List<String> input = Arrays.asList("CHECK_IN", "MC1", "ADULT", "CENTRAL");
+
+// // Act
+// controller.distributeInputs(input);
+
+// // Assert
+// verify(controller, times(1)).createJourney("MC1", "ADULT", "CENTRAL");
+
+// }
 
 // @Test
 // public void
