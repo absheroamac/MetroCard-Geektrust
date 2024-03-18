@@ -116,30 +116,6 @@ public class Controller implements IController {
 
     }
 
-    // public List<List<String>> readInput(String filename) throws IOException {
-    // List<List<String>> inputs = new ArrayList<>();
-    // try (BufferedReader reader = new BufferedReader(
-    // new InputStreamReader(getClass().getResourceAsStream(filename)))) {
-
-    // String line;
-
-    // while ((line = reader.readLine()) != null) {
-
-    // // System.out.println(line);
-
-    // inputs.add(Arrays.asList(line.split(" ")));
-    // }
-
-    // } catch (IOException e) {
-    // System.out.println("Error handling file \n" + e.getMessage());
-    // // return null;
-
-    // }
-
-    // return inputs;
-
-    // }
-
     public List<List<String>> readInput(String filename) throws IOException {
         List<List<String>> inputs = new ArrayList<>();
         try {
