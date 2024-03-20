@@ -27,6 +27,8 @@ import com.example.geektrust.utils.RechargeSummary;
 
 public class Controller implements IController {
 
+    // Creating Service objects
+
     IMetroCardService metroCardService = new MetroCardService();
     IJourneyService journeyService = new JourneyService();
     IFareCalculationService fareCalculationService = new FareCalculationService(journeyService);
@@ -34,6 +36,12 @@ public class Controller implements IController {
 
     public Controller() {
 
+        metroCardService = new MetroCardService();
+        journeyService = new JourneyService(metroCardService);
+        fareCalculationService = new FareCalculationService(journeyService);
+        summaryService = new SummaryService(journeyService);
+
+        // creating passengertypes and stationtypes available.
         List<PassangerType> passangerTypes = Arrays.asList(PassangerType.ADULT, PassangerType.KID,
                 PassangerType.SENIOR_CITIZEN);
         List<StationType> stationTypes = Arrays.asList(StationType.CENTRAL, StationType.AIRPORT);
@@ -53,20 +61,7 @@ public class Controller implements IController {
         Station station = new Station(StationType.valueOf(fromStation));
 
         MetroCard metroCard = metroCardService.getCard(id);
-        Bill bill = fareCalculationService.getBill(passanger, metroCard);
-        double payable = bill.getFare() - bill.getDiscount();
-        if (payable > metroCard.getBalance()) {
-
-            RechargeSummary rechargeSummary = metroCardService.rechargeMetroCard(id, payable - metroCard.getBalance());
-            journeyService.createJourney(metroCard, passanger, station, bill.getFare(), bill.getDiscount(),
-                    rechargeSummary.getCharges());
-
-        } else {
-            journeyService.createJourney(metroCard, passanger, station, bill.getFare(), bill.getDiscount(), 0);
-        }
-
-        metroCardService.deductAmount(id, payable);
-
+        journeyService.createJourney(metroCard, passanger, station);
     }
 
     public void printSummary() {
@@ -115,6 +110,30 @@ public class Controller implements IController {
         }
 
     }
+
+    // public List<List<String>> readInput(String filename) throws IOException {
+    // List<List<String>> inputs = new ArrayList<>();
+    // try (BufferedReader reader = new BufferedReader(
+    // new InputStreamReader(getClass().getResourceAsStream(filename)))) {
+
+    // String line;
+
+    // while ((line = reader.readLine()) != null) {
+
+    // // System.out.println(line);
+
+    // inputs.add(Arrays.asList(line.split(" ")));
+    // }
+
+    // } catch (IOException e) {
+    // System.out.println("Error handling file \n" + e.getMessage());
+    // // return null;
+
+    // }
+
+    // return inputs;
+
+    // }
 
     public List<List<String>> readInput(String filename) throws IOException {
         List<List<String>> inputs = new ArrayList<>();

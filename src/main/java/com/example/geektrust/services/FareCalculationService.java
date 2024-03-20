@@ -33,8 +33,9 @@ public class FareCalculationService implements IFareCalculationService {
 
         double fare = calculateFare(passanger);
         double discount = checkForDiscount(metroCard, fare);
+        double payable = fare - discount;
 
-        return new Bill(fare, discount);
+        return new Bill(fare, discount, payable);
 
     }
 
