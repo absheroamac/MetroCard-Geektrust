@@ -6,7 +6,7 @@ import com.example.geektrust.utils.Bill;
 
 public interface IFareCalculationService {
 
-    public double calculateFare(Passanger passanger);
+    public int calculateFare(Passanger passanger);
 
     public Bill getBill(Passanger passanger, MetroCard metroCard);
 

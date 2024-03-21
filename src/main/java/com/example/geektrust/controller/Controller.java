@@ -27,17 +27,21 @@ import com.example.geektrust.utils.RechargeSummary;
 
 public class Controller implements IController {
 
-    IMetroCardService metroCardService = new MetroCardService();
-    IJourneyService journeyService = new JourneyService();
+    // Creating Service objects
+
+    IMetroCardService metroCardService;
+    IJourneyService journeyService;
     IFareCalculationService fareCalculationService = new FareCalculationService(journeyService);
     ISummaryService summaryService = new SummaryService(journeyService);
 
     public Controller() {
 
-        List<PassangerType> passangerTypes = Arrays.asList(PassangerType.ADULT, PassangerType.KID,
-                PassangerType.SENIOR_CITIZEN);
-        List<StationType> stationTypes = Arrays.asList(StationType.CENTRAL, StationType.AIRPORT);
-        summaryService.setTypes(passangerTypes, stationTypes);
+        metroCardService = new MetroCardService();
+        fareCalculationService = new FareCalculationService(journeyService);
+        journeyService = new JourneyService(metroCardService, fareCalculationService);
+        summaryService = new SummaryService(journeyService);
+
+        // creating passengertypes and stationtypes available.
 
     }
 
@@ -53,20 +57,7 @@ public class Controller implements IController {
         Station station = new Station(StationType.valueOf(fromStation));
 
         MetroCard metroCard = metroCardService.getCard(id);
-        Bill bill = fareCalculationService.getBill(passanger, metroCard);
-        double payable = bill.getFare() - bill.getDiscount();
-        if (payable > metroCard.getBalance()) {
-
-            RechargeSummary rechargeSummary = metroCardService.rechargeMetroCard(id, payable - metroCard.getBalance());
-            journeyService.createJourney(metroCard, passanger, station, bill.getFare(), bill.getDiscount(),
-                    rechargeSummary.getCharges());
-
-        } else {
-            journeyService.createJourney(metroCard, passanger, station, bill.getFare(), bill.getDiscount(), 0);
-        }
-
-        metroCardService.deductAmount(id, payable);
-
+        journeyService.createJourney(id, passanger, station);
     }
 
     public void printSummary() {
