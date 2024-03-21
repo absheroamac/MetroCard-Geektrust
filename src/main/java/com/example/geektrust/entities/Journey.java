@@ -9,7 +9,7 @@ public class Journey {
     double fare;
     double discount;
 
-    public Journey(Passanger passanger, Station from, Station to, double fare, double discount) {
+    public Journey(Passanger passanger, Station from, double fare, double discount) {
         this.passanger = passanger;
         this.from = from;
         this.fare = fare;

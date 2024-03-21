@@ -40,7 +40,7 @@ public class JourneyService implements IJourneyService {
     }
 
     @Override
-    public Journey createJourney(String id, Passanger passanger, Station from) {
+    public void createJourney(String id, Passanger passanger, Station from) {
         MetroCard metroCard = metroCardService.getCard(id);
         Bill bill = fareCalculationService.getBill(passanger, metroCard);
         if (bill.getPayable() > metroCard.getBalance()) {
@@ -82,67 +82,25 @@ public class JourneyService implements IJourneyService {
 
     }
 
-    public Journey createJourney(MetroCard metroCard, Passanger passanger, Station from, double fare, double discount,
-            double charges) {
-        String id = metroCard.getId();
-        StationType to;
-        if (from.getStationType() == StationType.AIRPORT) {
-
-            to = StationType.CENTRAL;
-
-        } else {
-            to = StationType.AIRPORT;
-        }
-
-        Station toStation = new Station(to);
-        Journey journey = new Journey(passanger, from, toStation, fare, discount, charges);
-
-        if (journeysMap.containsKey(id)) {
-
-            List<Journey> current = journeysMap.get(id);
-            current.add(journey);
-            journeysMap.put(id, current);
-        } else {
-            List<Journey> arrayList = new ArrayList<>();
-            arrayList.add(journey);
-            journeysMap.put(id, arrayList);
-        }
-
-        if (journeysFromMap.containsKey(journey.getFrom())) {
-            List<Journey> current = journeysFromMap.getOrDefault(journey.getFrom(), new ArrayList<>());
-            current.add(journey);
-            journeysFromMap.put(journey.getFrom(), current);
-
-        }
-
-        else {
-            List<Journey> arrayList = new ArrayList<>();
-            arrayList.add(journey);
-            journeysFromMap.put(journey.getFrom(), arrayList);
-        }
-        return journey;
+    @Override
+    public CollectionSummary getStationSummary(StationType station) {
+        return stationSummary.get(station);
     }
 
-    @Override
-    public List<Journey> getTripsFrom(StationType station) {
-        return journeysFromMap.get(station);
+    public Map<StationType, CollectionSummary> getCollectionSummaries() {
+        return this.stationSummary;
+    }
+
+    public Map<PassangerType, PassengerSummary> getPassengerSummary(StationType station) {
+        return passengerSummarys.get(station);
     }
 
     public List<Journey> getJourneysOf(String id) {
-        List<Journey> defult = new ArrayList<>();
-        return journeysMap.getOrDefault(id, defult);
+        return journeysMap.get(id);
     }
 
     // public Map<StationType, Double> getCharges() {
     // return this.collectedFees;
     // }
-
-    public void setJourneys(Map<String, Journey> journeys) {
-        this.journeys = journeys;
-    }
-
-    public void setJourneysMap(Map<StationType, List<Journey>> journeysMap) {
-        this.journeysFromMap = journeysMap;
-    }
 
 }

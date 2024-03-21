@@ -17,7 +17,7 @@ public class FareCalculationService implements IFareCalculationService {
     }
 
     @Override
-    public double calculateFare(Passanger passanger) {
+    public int calculateFare(Passanger passanger) {
 
         if (passanger.getPassangerType() == PassangerType.ADULT) {
             return 200;
@@ -31,17 +31,17 @@ public class FareCalculationService implements IFareCalculationService {
 
     public Bill getBill(Passanger passanger, MetroCard metroCard) {
 
-        double fare = calculateFare(passanger);
-        double discount = checkForDiscount(metroCard, fare);
-        double payable = fare - discount;
+        int fare = calculateFare(passanger);
+        int discount = checkForDiscount(metroCard, fare);
+        int payable = fare - discount;
 
         return new Bill(fare, discount, payable);
 
     }
 
-    public double checkForDiscount(MetroCard metroCard, double fare) {
+    public int checkForDiscount(MetroCard metroCard, int fare) {
 
-        double discount;
+        int discount;
 
         if (journeyService.getJourneysOf(metroCard.getId()) == null) {
 

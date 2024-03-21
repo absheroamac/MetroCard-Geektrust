@@ -29,23 +29,19 @@ public class Controller implements IController {
 
     // Creating Service objects
 
-    IMetroCardService metroCardService = new MetroCardService();
-    IJourneyService journeyService = new JourneyService();
+    IMetroCardService metroCardService;
+    IJourneyService journeyService;
     IFareCalculationService fareCalculationService = new FareCalculationService(journeyService);
     ISummaryService summaryService = new SummaryService(journeyService);
 
     public Controller() {
 
         metroCardService = new MetroCardService();
-        journeyService = new JourneyService(metroCardService);
         fareCalculationService = new FareCalculationService(journeyService);
+        journeyService = new JourneyService(metroCardService, fareCalculationService);
         summaryService = new SummaryService(journeyService);
 
         // creating passengertypes and stationtypes available.
-        List<PassangerType> passangerTypes = Arrays.asList(PassangerType.ADULT, PassangerType.KID,
-                PassangerType.SENIOR_CITIZEN);
-        List<StationType> stationTypes = Arrays.asList(StationType.CENTRAL, StationType.AIRPORT);
-        summaryService.setTypes(passangerTypes, stationTypes);
 
     }
 
@@ -61,7 +57,7 @@ public class Controller implements IController {
         Station station = new Station(StationType.valueOf(fromStation));
 
         MetroCard metroCard = metroCardService.getCard(id);
-        journeyService.createJourney(metroCard, passanger, station);
+        journeyService.createJourney(id, passanger, station);
     }
 
     public void printSummary() {

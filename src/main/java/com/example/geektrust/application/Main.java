@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Controller controller = new Controller();
 
-        String input = args[0];
+        // String input = args[0];
         String localTest = "input.txt";
-        controller.start(input);
+        controller.start(localTest);
     }
 }

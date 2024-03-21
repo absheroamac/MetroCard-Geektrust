@@ -10,6 +10,4 @@ public interface ISummaryService {
 
     public void printSummary();
 
-    public void setTypes(List<PassangerType> passangerTypes, List<StationType> stationTypes);
-
 }

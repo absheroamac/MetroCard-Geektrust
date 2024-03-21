@@ -2,20 +2,26 @@ package com.example.geektrust.utils;
 
 public class Bill {
 
-    private double fare;
-    private double discount;
+    private int fare;
+    private int discount;
+    private int payable;
 
-    public Bill(double fare, double discount) {
+    public Bill(int fare, int discount, int payable) {
         this.fare = fare;
         this.discount = discount;
+        this.payable = payable;
     }
 
-    public double getFare() {
+    public int getFare() {
         return fare;
     }
 
-    public double getDiscount() {
+    public int getDiscount() {
         return discount;
+    }
+
+    public int getPayable() {
+        return payable;
     }
 
 }
