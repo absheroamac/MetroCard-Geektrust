@@ -9,6 +9,7 @@ import java.util.List;
 import java.io.FileInputStream;
 import java.util.Scanner;
 
+import com.example.geektrust.constants.Common;
 import com.example.geektrust.entities.MetroCard;
 import com.example.geektrust.entities.Passanger;
 import com.example.geektrust.entities.PassangerType;
@@ -80,27 +81,21 @@ public class Controller implements IController {
 
         // System.out.println(input.toString());
 
-        switch (input.get(0)) {
+        switch (input.get(Common.ZERO)) {
             case "BALANCE":
-                if (input.size() == 3) {
 
-                    createMetroCard(input.get(1), input.get(2));
-
-                }
+                createMetroCard(input.get(Common.ONE), input.get(Common.TWO));
 
                 break;
             case "CHECK_IN":
-                if (input.size() == 4) {
 
-                    createJourney(input.get(1), input.get(2), input.get(3));
+                createJourney(input.get(Common.ONE), input.get(Common.TWO), input.get(Common.THREE));
 
-                }
                 break;
 
             case "PRINT_SUMMARY":
-                if (input.size() == 1) {
-                    printSummary();
-                }
+
+                printSummary();
 
             default:
                 break;
