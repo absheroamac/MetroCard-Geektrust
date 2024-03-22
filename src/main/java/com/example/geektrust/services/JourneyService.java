@@ -44,50 +44,45 @@ public class JourneyService implements IJourneyService {
     public void createJourney(String id, Passanger passanger, Station from) {
         MetroCard metroCard = metroCardService.getCard(id);
         Bill bill = fareCalculationService.getBill(passanger, metroCard);
+        int charges = bill.getPayable() > metroCard.getBalance() ? rechargeCardAndGetCharges(metroCard, bill)
+                : Common.ZERO;
+
         Journey journey = new Journey(passanger, from, bill.getFare(), bill.getDiscount());
-        if (bill.getPayable() > metroCard.getBalance()) {
-            RechargeSummary rechargeSummary = metroCardService.rechargeMetroCard(metroCard.getId(),
-                    (int) bill.getPayable() - (int) metroCard.getBalance());
 
-            updateRepo(journey, rechargeSummary.getCharges());
-        } else {
-
-            updateRepo(journey, Common.ZERO);
-
-        }
+        updateRepo(journey, charges, from);
 
         metroCardService.deductAmount(id, bill.getPayable());
 
-        List<Journey> list;
-        if (journeysMap.containsKey(id)) {
-            list = journeysMap.get(id);
-        } else {
-            list = new ArrayList<>();
-        }
-        list.add(journey);
-        journeysMap.put(id, list);
-
+        addJourneyToList(id, journey);
     }
 
-    public void updateRepo(Journey journey, int charges) {
+    private int rechargeCardAndGetCharges(MetroCard metroCard, Bill bill) {
+        RechargeSummary rechargeSummary = metroCardService.rechargeMetroCard(metroCard.getId(),
+                (int) (bill.getPayable() - metroCard.getBalance()));
+        return rechargeSummary.getCharges();
+    }
 
-        Map<PassangerType, PassengerSummary> passengerMap = passengerSummarys.get(journey.getFrom());
-        PassengerSummary passengerSummary;
-        if (passengerMap.containsKey(journey.getPassengerType())) {
-            passengerSummary = passengerMap.get(journey.getPassengerType());
-        } else {
-            passengerSummary = new PassengerSummary(journey.getPassengerType(), Common.ZERO);
-        }
+    private void updateRepo(Journey journey, int charges, Station from) {
+        updatePassengerSummary(journey, from.getStationType());
+        updateCollectionSummary(journey, charges, from.getStationType());
+    }
 
+    private void updatePassengerSummary(Journey journey, StationType from) {
+        PassengerSummary passengerSummary = passengerSummarys.get(from).getOrDefault(journey.getPassengerType(),
+                new PassengerSummary(journey.getPassengerType(), 0));
         passengerSummary.addCount();
-        passengerMap.put(journey.getPassengerType(), passengerSummary);
-        passengerSummarys.put(journey.getFrom(), passengerMap);
+        passengerSummarys.get(from).put(journey.getPassengerType(), passengerSummary);
+    }
 
-        CollectionSummary collectionSummary = stationSummary.get(journey.getFrom());
+    private void updateCollectionSummary(Journey journey, int charges, StationType from) {
+        CollectionSummary collectionSummary = stationSummary.get(from);
         collectionSummary.addToCollection((int) (charges + journey.getFare() - journey.getDiscount()));
         collectionSummary.addToDiscount((int) journey.getDiscount());
-        stationSummary.put(journey.getFrom(), collectionSummary);
+        stationSummary.put(from, collectionSummary);
+    }
 
+    private void addJourneyToList(String id, Journey journey) {
+        journeysMap.computeIfAbsent(id, k -> new ArrayList<>()).add(journey);
     }
 
     @Override
@@ -95,20 +90,18 @@ public class JourneyService implements IJourneyService {
         return stationSummary.get(station);
     }
 
+    @Override
     public Map<StationType, CollectionSummary> getCollectionSummaries() {
-        return this.stationSummary;
+        return stationSummary;
     }
 
+    @Override
     public Map<PassangerType, PassengerSummary> getPassengerSummary(StationType station) {
         return passengerSummarys.get(station);
     }
 
+    @Override
     public List<Journey> getJourneysOf(String id) {
         return journeysMap.get(id);
     }
-
-    // public Map<StationType, Double> getCharges() {
-    // return this.collectedFees;
-    // }
-
 }
