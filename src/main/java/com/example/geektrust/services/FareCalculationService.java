@@ -16,13 +16,16 @@ public class FareCalculationService implements IFareCalculationService {
     @Override
     public int calculateFare(Passanger passanger) {
 
-        if (passanger.getPassangerType() == PassangerType.ADULT) {
-            return Common.ADULT;
-        }
-        if (passanger.getPassangerType() == PassangerType.SENIOR_CITIZEN) {
-            return Common.SENIOR_CITIZEN;
-        } else {
-            return Common.CHILD;
+        switch (passanger.getPassangerType().toString()) {
+            case "ADULT":
+                return Common.ADULT;
+            case "SENIOR_CITIZEN":
+                return Common.SENIOR_CITIZEN;
+            case "KID":
+                return Common.CHILD;
+
+            default:
+                return 0;
         }
     }
 

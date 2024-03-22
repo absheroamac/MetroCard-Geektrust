@@ -56,6 +56,8 @@ public class JourneyService implements IJourneyService {
 
         }
 
+        metroCardService.deductAmount(id, bill.getPayable());
+
         List<Journey> list;
         if (journeysMap.containsKey(id)) {
             list = journeysMap.get(id);
