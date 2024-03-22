@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import com.example.geektrust.constants.Common;
 import com.example.geektrust.entities.Journey;
 import com.example.geektrust.entities.MetroCard;
 import com.example.geektrust.entities.Passanger;
@@ -43,10 +44,15 @@ public class JourneyService implements IJourneyService {
     public void createJourney(String id, Passanger passanger, Station from) {
         MetroCard metroCard = metroCardService.getCard(id);
         Bill bill = fareCalculationService.getBill(passanger, metroCard);
+        Journey journey = new Journey(passanger, from, bill.getFare(), bill.getDiscount());
         if (bill.getPayable() > metroCard.getBalance()) {
             RechargeSummary rechargeSummary = metroCardService.rechargeMetroCard(metroCard.getId(),
-                    bill.getPayable() - metroCard.getBalance());
+                    (int) bill.getPayable() - (int) metroCard.getBalance());
+
+            updateRepo(journey, rechargeSummary.getCharges());
         } else {
+
+            updateRepo(journey, Common.ZERO);
 
         }
 
@@ -56,7 +62,7 @@ public class JourneyService implements IJourneyService {
         } else {
             list = new ArrayList<>();
         }
-        list.add(new Journey(passanger, from, bill.getFare(), bill.getDiscount()));
+        list.add(journey);
         journeysMap.put(id, list);
 
     }
@@ -68,7 +74,7 @@ public class JourneyService implements IJourneyService {
         if (passengerMap.containsKey(journey.getPassengerType())) {
             passengerSummary = passengerMap.get(journey.getPassengerType());
         } else {
-            passengerSummary = new PassengerSummary(journey.getPassengerType(), 0);
+            passengerSummary = new PassengerSummary(journey.getPassengerType(), Common.ZERO);
         }
 
         passengerSummary.addCount();
@@ -76,8 +82,8 @@ public class JourneyService implements IJourneyService {
         passengerSummarys.put(journey.getFrom(), passengerMap);
 
         CollectionSummary collectionSummary = stationSummary.get(journey.getFrom());
-        collectionSummary.addToCollection(charges + journey.getFare() - journey.getDiscount());
-        collectionSummary.addToDiscount(journey.getDiscount());
+        collectionSummary.addToCollection((int) (charges + journey.getFare() - journey.getDiscount()));
+        collectionSummary.addToDiscount((int) journey.getDiscount());
         stationSummary.put(journey.getFrom(), collectionSummary);
 
     }

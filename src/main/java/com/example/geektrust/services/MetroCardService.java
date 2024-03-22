@@ -3,6 +3,7 @@ package com.example.geektrust.services;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.geektrust.constants.Common;
 import com.example.geektrust.entities.MetroCard;
 import com.example.geektrust.utils.RechargeSummary;
 
@@ -29,17 +30,17 @@ public class MetroCardService implements IMetroCardService {
     }
 
     @Override
-    public RechargeSummary rechargeMetroCard(String id, double amountRequired) {
+    public RechargeSummary rechargeMetroCard(String id, int amountRequired) {
         MetroCard card = cards.get(id);
-        double charges = amountRequired * 0.02;
+        double charges = (int) amountRequired * Common.CHARGE;
         card.addBalance(amountRequired);
-        RechargeSummary rechargeSummary = new RechargeSummary(card, charges);
+        RechargeSummary rechargeSummary = new RechargeSummary(card, (int) charges);
 
         cards.put(id, card);
         return rechargeSummary;
     }
 
-    public void deductAmount(String id, double amount) {
+    public void deductAmount(String id, int amount) {
         MetroCard card = cards.get(id);
         card.setBalance(card.getBalance() - amount);
         cards.put(id, card);

@@ -39,18 +39,6 @@ public class SummaryService implements ISummaryService {
         }
     }
 
-    // TOTAL_COLLECTION CENTRAL 300 0
-    // TOTAL_COLLECTION
-    // ADULT 1
-    // SENIOR_CITIZEN 1
-    // TOTAL_COLLECTION AIRPORT 403 100
-    // PASSENGER_TYPE_SUMMARY
-    // ADULT 2
-    // KID 2
-
-    // throw new UnsupportedOperationException("Unimplemented method
-    // 'buildSummary'");
-
     @Override
     public void printSummary() {
 
@@ -59,7 +47,7 @@ public class SummaryService implements ISummaryService {
             CollectionSummary collectionSummary = collectionSummaries.get(stationType);
             answer += "TOTAL_COLLECTION " + collectionSummary.getStation() + " "
                     + collectionSummary.getTotalCollection() + " " + collectionSummary.getTotalDiscount() + "\n";
-            answer += "PASSENGER_TYPE_SUMMARY";
+            answer += "PASSENGER_TYPE_SUMMARY\n";
 
             List<PassengerSummary> currentPassengers = passengerSummaries.get(stationType);
             for (PassengerSummary passengerSummary : currentPassengers) {

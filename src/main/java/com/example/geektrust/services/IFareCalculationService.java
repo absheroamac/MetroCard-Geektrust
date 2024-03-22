@@ -10,4 +10,6 @@ public interface IFareCalculationService {
 
     public Bill getBill(Passanger passanger, MetroCard metroCard);
 
+    public void setJourneyService(IJourneyService journeyService);
+
 }

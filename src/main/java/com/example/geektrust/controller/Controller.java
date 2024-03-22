@@ -31,14 +31,15 @@ public class Controller implements IController {
 
     IMetroCardService metroCardService;
     IJourneyService journeyService;
-    IFareCalculationService fareCalculationService = new FareCalculationService(journeyService);
-    ISummaryService summaryService = new SummaryService(journeyService);
+    IFareCalculationService fareCalculationService;
+    ISummaryService summaryService;
 
     public Controller() {
 
         metroCardService = new MetroCardService();
-        fareCalculationService = new FareCalculationService(journeyService);
+        fareCalculationService = new FareCalculationService();
         journeyService = new JourneyService(metroCardService, fareCalculationService);
+        fareCalculationService.setJourneyService(journeyService);
         summaryService = new SummaryService(journeyService);
 
         // creating passengertypes and stationtypes available.

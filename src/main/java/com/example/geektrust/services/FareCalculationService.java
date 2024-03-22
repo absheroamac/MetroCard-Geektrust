@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.geektrust.entities.MetroCard;
 import com.example.geektrust.entities.Passanger;
+import com.example.geektrust.constants.Common;
 import com.example.geektrust.entities.Journey;
 import com.example.geektrust.utils.Bill;
 import com.example.geektrust.entities.PassangerType;
@@ -12,20 +13,16 @@ public class FareCalculationService implements IFareCalculationService {
 
     IJourneyService journeyService;
 
-    public FareCalculationService(IJourneyService journeyService) {
-        this.journeyService = journeyService;
-    }
-
     @Override
     public int calculateFare(Passanger passanger) {
 
         if (passanger.getPassangerType() == PassangerType.ADULT) {
-            return 200;
+            return Common.ADULT;
         }
         if (passanger.getPassangerType() == PassangerType.SENIOR_CITIZEN) {
-            return 100;
+            return Common.SENIOR_CITIZEN;
         } else {
-            return 50;
+            return Common.CHILD;
         }
     }
 
@@ -45,7 +42,7 @@ public class FareCalculationService implements IFareCalculationService {
 
         if (journeyService.getJourneysOf(metroCard.getId()) == null) {
 
-            return 0;
+            return Common.ZERO;
 
         }
 
@@ -59,6 +56,10 @@ public class FareCalculationService implements IFareCalculationService {
 
         return discount;
 
+    }
+
+    public void setJourneyService(IJourneyService journeyService) {
+        this.journeyService = journeyService;
     }
 
 }

@@ -5,13 +5,13 @@ import com.example.geektrust.entities.MetroCard;
 public class RechargeSummary {
 
     private MetroCard metroCard;
-    private double charges;
+    private int charges;
 
-    public RechargeSummary(MetroCard metroCard, double charges) {
+    public RechargeSummary(MetroCard metroCard, int charges) {
         this.charges = charges;
     }
 
-    public double getCharges() {
+    public int getCharges() {
         return this.charges;
     }
 

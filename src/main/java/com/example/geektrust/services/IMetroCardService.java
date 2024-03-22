@@ -7,10 +7,10 @@ public interface IMetroCardService {
 
     public MetroCard createMetroCard(String id, String balance);
 
-    public RechargeSummary rechargeMetroCard(String metroCard, double amountRequired);
+    public RechargeSummary rechargeMetroCard(String metroCard, int amountRequired);
 
     public MetroCard getCard(String id);
 
-    public void deductAmount(String id, double amount);
+    public void deductAmount(String id, int amount);
 
 }

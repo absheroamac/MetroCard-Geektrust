@@ -6,8 +6,8 @@ import java.util.Objects;
 public class CollectionSummary {
 
     StationType station;
-    double totalCollection;
-    double totalDiscount;
+    int totalCollection;
+    int totalDiscount;
 
     public CollectionSummary(StationType station) {
         this.station = station;
@@ -15,19 +15,19 @@ public class CollectionSummary {
         totalDiscount = 0;
     }
 
-    public CollectionSummary(StationType station, double totalCollection, double totalDiscount) {
+    public CollectionSummary(StationType station, int totalCollection, int totalDiscount) {
         this.station = station;
         this.totalCollection = totalCollection;
         this.totalDiscount = totalDiscount;
     }
 
-    public void addToCollection(double amount) {
+    public void addToCollection(int amount) {
 
         this.totalCollection += amount;
 
     }
 
-    public void addToDiscount(double discount) {
+    public void addToDiscount(int discount) {
         this.totalDiscount += discount;
     }
 
@@ -35,11 +35,11 @@ public class CollectionSummary {
         return this.station;
     }
 
-    public double getTotalCollection() {
+    public int getTotalCollection() {
         return this.totalCollection;
     }
 
-    public double getTotalDiscount() {
+    public int getTotalDiscount() {
         return this.totalDiscount;
     }
 
