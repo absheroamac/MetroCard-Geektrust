@@ -24,6 +24,10 @@ public interface IJourneyService {
 
     public Map<StationType, CollectionSummary> getCollectionSummaries();
 
+    public void setJourneys(Map<String, List<Journey>> journey);
+
+    public Map<String, List<Journey>> getJourneys();
+
     // public List<Journey> getTripsOf(PassangerType passangerType);
 
 }

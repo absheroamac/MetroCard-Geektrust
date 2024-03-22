@@ -3,6 +3,7 @@ package com.example.geektrust.services;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -103,5 +104,15 @@ public class JourneyService implements IJourneyService {
     @Override
     public List<Journey> getJourneysOf(String id) {
         return journeysMap.get(id);
+    }
+
+    public void setJourneys(Map<String, List<Journey>> journey) {
+
+        this.journeysMap = journey;
+
+    }
+
+    public Map<String, List<Journey>> getJourneys() {
+        return this.journeysMap;
     }
 }

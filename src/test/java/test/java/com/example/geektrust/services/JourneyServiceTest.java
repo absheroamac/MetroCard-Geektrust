@@ -1,75 +1,68 @@
-// package test.java.com.example.geektrust.services;
+package test.java.com.example.geektrust.services;
 
-// import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
-// import java.util.Arrays;
-// import java.util.HashMap;
-// import java.util.List;
-// import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-// import org.junit.jupiter.api.Test;
-// import org.junit.jupiter.api.extension.ExtendWith;
-// import org.mockito.InjectMocks;
-// import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-// import com.example.geektrust.entities.Journey;
-// import com.example.geektrust.entities.MetroCard;
-// import com.example.geektrust.entities.Passanger;
-// import com.example.geektrust.entities.PassangerType;
-// import com.example.geektrust.entities.Station;
-// import com.example.geektrust.entities.StationType;
-// import com.example.geektrust.services.JourneyService;
+import com.example.geektrust.entities.Journey;
+import com.example.geektrust.entities.MetroCard;
+import com.example.geektrust.entities.Passanger;
+import com.example.geektrust.entities.PassangerType;
+import com.example.geektrust.entities.Station;
+import com.example.geektrust.entities.StationType;
+import com.example.geektrust.services.IFareCalculationService;
+import com.example.geektrust.services.IMetroCardService;
+import com.example.geektrust.services.JourneyService;
+import com.example.geektrust.utils.Bill;
 
-// @ExtendWith(MockitoExtension.class)
-// public class JourneyServiceTest {
+@ExtendWith(MockitoExtension.class)
+public class JourneyServiceTest {
 
-// @InjectMocks
-// JourneyService journeyService;
+    @Mock
+    IMetroCardService metroCardService;
 
-// @Test
-// public void createJourneyMethodShouldCreateAJourneyMethodandReturn() {
-// // Arrange
-// MetroCard metroCard = new MetroCard("MC1", 200);
-// Passanger passanger = new Passanger(PassangerType.ADULT);
-// Station station = new Station(StationType.CENTRAL);
-// Station to = new Station(StationType.AIRPORT);
+    @Mock
+    IFareCalculationService fareCalculationService;
 
-// Journey expected = new Journey(passanger, station, to, 200, 0, 0);
+    @InjectMocks
+    JourneyService journeyService;
 
-// Map<String, Journey> journeys = new HashMap<>();
-// // journeys.put("MC1",expected);
+    @Test
+    public void createJourneyMethodShouldCreateAJourneyMethodandReturn() {
+        // Arrange
+        MetroCard metroCard = new MetroCard("MC1", 200);
+        Passanger passanger = new Passanger(PassangerType.ADULT);
+        Station station = new Station(StationType.CENTRAL);
 
-// journeyService.setJourneys(journeys);
+        Bill bill = new Bill(200, 0, 200);
 
-// // act
-// Journey actual = journeyService.createJourney(metroCard, passanger, station,
-// 200, 0, 0);
+        Journey expected = new Journey(passanger, station, 200, 0);
 
-// // assert
-// assertEquals(expected, actual);
+        Map<String, List<Journey>> journeys = new HashMap<>();
+        // journeys.put("MC1", expected);
 
-// }
+        journeyService.setJourneys(journeys);
+        // journeys.put("MC1",Arrays.asList(expected));
 
-// @Test
-// public void getTripsFromShouldReturnListOfTripsFromInputedStation() {
-// // Arrange
-// MetroCard metroCard = new MetroCard("MC1", 200);
-// Passanger passanger = new Passanger(PassangerType.KID);
-// Station station = new Station(StationType.AIRPORT);
+        when(metroCardService.getCard("MC1")).thenReturn(metroCard);
+        when(fareCalculationService.getBill(passanger, metroCard)).thenReturn(bill);
 
-// Journey journey = new Journey(passanger, station, station, 50, 0);
+        // act
+        journeyService.createJourney(metroCard.getId(), passanger, station);
+        Map<String, List<Journey>> actual = journeyService.getJourneys();
 
-// List<Journey> journeys = Arrays.asList(journey);
-// Map<StationType, List<Journey>> journeysMap = new HashMap<>();
+        // assert
+        assertEquals(expected, actual.get("MC1").get(0));
 
-// journeysMap.put(StationType.AIRPORT, journeys);
-// journeyService.setJourneysMap(journeysMap);
+    }
 
-// //
-// List<Journey> actual = journeyService.getTripsFrom(StationType.AIRPORT);
-
-// assertEquals(journeys, actual);
-
-// }
-
-// }
+}

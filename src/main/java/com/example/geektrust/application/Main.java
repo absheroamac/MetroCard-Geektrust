@@ -24,8 +24,8 @@ public class Main {
         Controller controller = new Controller(metroCardService, journeyService, fareCalculationService,
                 summaryService);
 
-        // String input = args[Common.ZERO];
+        String input = args[Common.ZERO];
         String localTest = "input.txt";
-        controller.start(localTest);
+        controller.start(input);
     }
 }
