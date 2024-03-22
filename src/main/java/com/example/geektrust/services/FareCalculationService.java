@@ -37,25 +37,21 @@ public class FareCalculationService implements IFareCalculationService {
     }
 
     public int checkForDiscount(MetroCard metroCard, int fare) {
-
-        int discount;
-
         if (journeyService.getJourneysOf(metroCard.getId()) == null) {
-
             return Common.ZERO;
-
         }
 
         List<Journey> journeys = journeyService.getJourneysOf(metroCard.getId());
-
-        if (journeys.size() == Common.ZERO || journeys.size() % Common.TWO == Common.ZERO) {
-            discount = Common.ZERO;
-        } else {
-            discount = fare / Common.TWO;
-        }
-
+        int discount = calculateDiscount(journeys.size(), fare);
         return discount;
+    }
 
+    private int calculateDiscount(int numberOfJourneys, int fare) {
+        if (numberOfJourneys == Common.ZERO || numberOfJourneys % Common.TWO == Common.ZERO) {
+            return Common.ZERO;
+        } else {
+            return fare / Common.TWO;
+        }
     }
 
     public void setJourneyService(IJourneyService journeyService) {

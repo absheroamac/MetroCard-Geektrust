@@ -35,13 +35,15 @@ public class Controller implements IController {
     IFareCalculationService fareCalculationService;
     ISummaryService summaryService;
 
-    public Controller() {
+    public Controller(IMetroCardService metroCardService, IJourneyService journeyService,
+            IFareCalculationService fareCalculationService, ISummaryService summaryService) {
 
-        metroCardService = new MetroCardService();
-        fareCalculationService = new FareCalculationService();
-        journeyService = new JourneyService(metroCardService, fareCalculationService);
+        this.metroCardService = metroCardService;
+        this.journeyService = journeyService;
+        this.fareCalculationService = fareCalculationService;
+        this.summaryService = summaryService;
+
         fareCalculationService.setJourneyService(journeyService);
-        summaryService = new SummaryService(journeyService);
 
         // creating passengertypes and stationtypes available.
 
