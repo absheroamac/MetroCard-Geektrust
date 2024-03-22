@@ -48,10 +48,10 @@ public class FareCalculationService implements IFareCalculationService {
 
         List<Journey> journeys = journeyService.getJourneysOf(metroCard.getId());
 
-        if (journeys.size() == 0 || journeys.size() % 2 == 0) {
-            discount = 0;
+        if (journeys.size() == Common.ZERO || journeys.size() % Common.TWO == Common.ZERO) {
+            discount = Common.ZERO;
         } else {
-            discount = fare / 2;
+            discount = fare / Common.TWO;
         }
 
         return discount;
