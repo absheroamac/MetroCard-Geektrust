@@ -59,4 +59,17 @@ public class MetroCardServiceTest {
 
     }
 
+    @Test
+    public void deductAmountMethodShouldUpdateTheMetroCard() {
+
+        MetroCard metroCard = new MetroCard("MC1", 200);
+        Map<String, MetroCard> cards = new HashMap<>();
+        cards.put("MC1", metroCard);
+
+        metroCardService.setMetroCards(cards);
+        metroCardService.deductAmount("MC1", 100);
+
+        assertEquals(metroCardService.getCard("MC1").getBalance(), 100);
+    }
+
 }
