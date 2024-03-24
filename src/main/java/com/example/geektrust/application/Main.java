@@ -25,7 +25,7 @@ public class Main {
                 summaryService);
 
         String input = args[Common.ZERO];
-        String localTest = "input.txt";
+        // String localTest = "input.txt";
         controller.start(input);
     }
 }

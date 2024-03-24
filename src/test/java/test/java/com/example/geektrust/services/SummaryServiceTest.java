@@ -1,133 +1,127 @@
-// package test.java.com.example.geektrust.services;
+package test.java.com.example.geektrust.services;
 
-// import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.HashMap;
 
-// import static org.mockito.Mockito.when;
-// import java.util.List;
-// import java.util.Arrays;
-// import java.util.Map;
-// import java.util.HashMap;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-// import org.junit.jupiter.api.Test;
-// import org.junit.jupiter.api.extension.ExtendWith;
-// import org.mockito.InjectMocks;
-// import org.mockito.Mock;
-// import org.mockito.junit.jupiter.MockitoExtension;
+import com.example.geektrust.entities.Journey;
+import com.example.geektrust.entities.Passanger;
+import com.example.geektrust.entities.PassangerType;
+import com.example.geektrust.entities.Station;
+import com.example.geektrust.entities.StationType;
+import com.example.geektrust.services.IJourneyService;
+import com.example.geektrust.services.JourneyService;
+import com.example.geektrust.services.SummaryService;
+import com.example.geektrust.utils.CollectionSummary;
+import com.example.geektrust.utils.PassengerSummary;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
-// import com.example.geektrust.entities.Journey;
-// import com.example.geektrust.entities.Passanger;
-// import com.example.geektrust.entities.PassangerType;
-// import com.example.geektrust.entities.Station;
-// import com.example.geektrust.entities.StationType;
-// import com.example.geektrust.services.IJourneyService;
-// import com.example.geektrust.services.SummaryService;
-// import com.example.geektrust.utils.CollectionSummary;
-// import com.example.geektrust.utils.PassengerSummary;
-// import java.io.ByteArrayOutputStream;
-// import java.io.PrintStream;
+@ExtendWith(MockitoExtension.class)
+public class SummaryServiceTest {
 
-// @ExtendWith(MockitoExtension.class)
-// public class SummaryServiceTest {
+    @Mock
+    IJourneyService journeyService;
 
-// @Mock
-// IJourneyService journeyService;
+    @InjectMocks
+    SummaryService summaryService;
 
-// @InjectMocks
-// SummaryService summaryService;
+    @Test
+    public void buildSummaryShouldReturnTheSummaryFromJourneyService() {
 
-// @Test
-// public void buildSummaryShouldReturnTheSummaryFromJourneyService() {
+        // // TOTAL_COLLECTION CENTRAL 457 50
+        // // PASSENGER_TYPE_SUMMARY
+        // // DULT 2
+        // // SENIOR_CITIZEN 1
+        // // TOTAL_COLLECTION AIRPORT 252 100
+        // // PASSENGER_TYPE_SUMMARY
+        // // ADULT 1
+        // // KID 1
+        // // SENIOR_CITIZEN 1
 
-// // TOTAL_COLLECTION CENTRAL 457 50
-// // PASSENGER_TYPE_SUMMARY
-// // DULT 2
-// // SENIOR_CITIZEN 1
-// // TOTAL_COLLECTION AIRPORT 252 100
-// // PASSENGER_TYPE_SUMMARY
-// // ADULT 1
-// // KID 1
-// // SENIOR_CITIZEN 1
+        Map<StationType, CollectionSummary> collectionSummarys = new HashMap<>();
+        CollectionSummary collectionSummary1 = new CollectionSummary(StationType.AIRPORT);
+        CollectionSummary collectionSummary2 = new CollectionSummary(StationType.CENTRAL);
+        collectionSummarys.put(StationType.AIRPORT, collectionSummary1);
+        collectionSummarys.put(StationType.CENTRAL, collectionSummary2);
 
-// // Arrange
-// Journey journey1 = new Journey(new Passanger(PassangerType.ADULT), new
-// Station(StationType.CENTRAL),
-// new Station(StationType.AIRPORT), 200, 0);
-// Journey journey2 = new Journey(new Passanger(PassangerType.KID), new
-// Station(StationType.CENTRAL),
-// new Station(StationType.AIRPORT), 50, 0);
-// Journey journey3 = new Journey(new Passanger(PassangerType.SENIOR_CITIZEN),
-// new Station(StationType.CENTRAL),
-// new Station(StationType.AIRPORT), 100, 0);
-// Journey journey4 = new Journey(new Passanger(PassangerType.KID), new
-// Station(StationType.AIRPORT),
-// new Station(StationType.CENTRAL), 50, 0);
+        Map<PassangerType, PassengerSummary> passengerSummarys1 = new HashMap<>();
+        // Map<PassangerType,PassengerSummary> passengerSummarys2 = new HashMap<>();
 
-// List<Journey> fromCentral = Arrays.asList(journey1, journey2, journey3);
-// List<Journey> fromAirport = Arrays.asList(journey4);
+        PassengerSummary passengerSummary1 = new PassengerSummary(PassangerType.ADULT, 3);
+        PassengerSummary passengerSummary2 = new PassengerSummary(PassangerType.KID, 2);
 
-// List<PassangerType> passangerTypes = Arrays.asList(PassangerType.ADULT,
-// PassangerType.KID,
-// PassangerType.SENIOR_CITIZEN);
-// List<StationType> stationTypes = Arrays.asList(StationType.CENTRAL,
-// StationType.AIRPORT);
+        passengerSummarys1.put(PassangerType.ADULT, passengerSummary1);
+        passengerSummarys1.put(PassangerType.KID, passengerSummary2);
 
-// summaryService.setTypes(passangerTypes, stationTypes);
+        List<PassengerSummary> list = Arrays.asList(passengerSummary1, passengerSummary2);
+        Collections.sort(list);
 
-// when(journeyService.getTripsFrom(StationType.CENTRAL)).thenReturn(fromCentral);
-// when(journeyService.getTripsFrom(StationType.AIRPORT)).thenReturn(fromAirport);
+        when(journeyService.getCollectionSummaries()).thenReturn(collectionSummarys);
+        when(journeyService.getPassengerSummary(any(StationType.class))).thenReturn(passengerSummarys1);
 
-// CollectionSummary collectionSummary1 = new
-// CollectionSummary(StationType.CENTRAL, 350, 0);
-// CollectionSummary collectionSummary2 = new
-// CollectionSummary(StationType.AIRPORT, 50, 0);
-// List<CollectionSummary> expectedCollectionSummary =
-// Arrays.asList(collectionSummary1,
-// collectionSummary2);
+        summaryService.buildSummary();
 
-// Map<StationType, Map<PassangerType, PassengerSummary>>
-// expectedPassengerSummary = new HashMap<>();
+        Map<StationType, List<PassengerSummary>> actualPassengerSummary = summaryService.getPassengerSummary();
+        Map<StationType, CollectionSummary> actualCollectionSummary = summaryService.getCollectionSummary();
 
-// Map<PassangerType, PassengerSummary> passengerSummary1 = new HashMap<>();
-// passengerSummary1.put(PassangerType.ADULT, new
-// PassengerSummary(PassangerType.ADULT, 1));
-// passengerSummary1.put(PassangerType.KID, new
-// PassengerSummary(PassangerType.KID, 1));
-// passengerSummary1.put(PassangerType.SENIOR_CITIZEN,
-// new PassengerSummary(PassangerType.SENIOR_CITIZEN, 1));
+        assertEquals(actualPassengerSummary.get(StationType.AIRPORT), list);
+        assertEquals(actualCollectionSummary.get(StationType.AIRPORT), collectionSummary1);
 
-// Map<PassangerType, PassengerSummary> passengerSummary2 = new HashMap<>();
-// passengerSummary2.put(PassangerType.KID, new
-// PassengerSummary(PassangerType.KID, 1));
+    }
 
-// expectedPassengerSummary.put(StationType.CENTRAL, passengerSummary1);
-// expectedPassengerSummary.put(StationType.AIRPORT, passengerSummary2);
+    // }
 
-// // Act
-// summaryService.buildSummary();
-// List<CollectionSummary> actualCollectionSummary =
-// summaryService.getCollectionSummary();
-// Map<StationType, Map<PassangerType, PassengerSummary>> actualPassengerSummary
-// = summaryService
-// .getPassengerSummary();
+    @Test
+    public void printSummaryMethodShouldPrintTheSummary() {
+        // Arrange
+        final ByteArrayOutputStream outputStreamCapture = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCapture));
 
-// // Assert
-// assertEquals(expectedPassengerSummary, actualPassengerSummary);
-// assertEquals(expectedCollectionSummary, actualCollectionSummary);
+        String expected = "TOTAL_COLLECTION CENTRAL 350 0\nPASSENGER_TYPE_SUMMARY\nADULT 3\nKID 2\nTOTAL_COLLECTION AIRPORT 50 0\nPASSENGER_TYPE_SUMMARY\nADULT 3\nKID 2";
 
-// }
+        Map<StationType, CollectionSummary> collectionSummarys = new HashMap<>();
+        CollectionSummary collectionSummary1 = new CollectionSummary(StationType.AIRPORT, 50, 0);
+        CollectionSummary collectionSummary2 = new CollectionSummary(StationType.CENTRAL, 350, 0);
+        collectionSummarys.put(StationType.AIRPORT, collectionSummary1);
+        collectionSummarys.put(StationType.CENTRAL, collectionSummary2);
 
-// @Test
-// public void printSummaryMethodShouldPrintTheSummary() {
-// // Arrange
-// // final ByteArrayOutputStream outputStreamCapture = new
-// // ByteArrayOutputStream();
-// // System.setOut(new PrintStream(outputStreamCapture));
+        Map<PassangerType, PassengerSummary> passengerSummarys1 = new HashMap<>();
+        Map<StationType, List<PassengerSummary>> passengerSummarys = new HashMap<>();
 
-// // String expected = "SUB_TOTAL 13000.00\nCOUPON_DISCOUNTB4G1
-// // 2500.00\nTOTAL_PRO_DISCOUNT 0.00\nPRO_MEMBERSHIP_FEE 0.00\nENROLLMENT_FEE
-// // 0.00\nTOTAL 10500.00";
-// // when(bill.toString()).thenReturn(expected);
+        PassengerSummary passengerSummary1 = new PassengerSummary(PassangerType.ADULT, 3);
+        PassengerSummary passengerSummary2 = new PassengerSummary(PassangerType.KID, 2);
 
+        passengerSummarys1.put(PassangerType.ADULT, passengerSummary1);
+        passengerSummarys1.put(PassangerType.KID, passengerSummary2);
+
+        List<PassengerSummary> list = Arrays.asList(passengerSummary1, passengerSummary2);
+        // Collections.sort(list);
+        // System.out.println(list.toString());
+
+        passengerSummarys.put(StationType.AIRPORT, list);
+        passengerSummarys.put(StationType.CENTRAL, list);
+
+        summaryService.setCollectionSummarys(collectionSummarys);
+        summaryService.setPassengerSummary(passengerSummarys);
+
+        summaryService.printSummary();
+
+        assertEquals(expected.trim(), outputStreamCapture.toString().trim());
+
+    }
+}
 // // //Act
 // // geekdemy.printBill();
 
@@ -198,10 +192,6 @@
 // final ByteArrayOutputStream outputStreamCapture = new
 // ByteArrayOutputStream();
 // System.setOut(new PrintStream(outputStreamCapture));
-
-// String expected = "TOTAL_COLLECTION CENTRAL 350
-// 0\nPASSENGER_TYPE_SUMMARY\nADULT 1\nKID 1\nSENIOR_CITIZEN 1\nTOTAL_COLLECTION
-// AIRPORT 50 0\nPASSENGER_TYPE_SUMMARY\nKID 1";
 
 // // Act
 // summaryService.printSummary();

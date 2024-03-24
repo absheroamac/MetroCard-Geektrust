@@ -59,4 +59,20 @@ public class SummaryService implements ISummaryService {
 
     }
 
+    public Map<StationType, List<PassengerSummary>> getPassengerSummary() {
+        return this.passengerSummaries;
+    }
+
+    public Map<StationType, CollectionSummary> getCollectionSummary() {
+        return this.collectionSummaries;
+    }
+
+    public void setPassengerSummary(Map<StationType, List<PassengerSummary>> passengerSummaries) {
+        this.passengerSummaries = passengerSummaries;
+    }
+
+    public void setCollectionSummarys(Map<StationType, CollectionSummary> collectionSummaries) {
+        this.collectionSummaries = collectionSummaries;
+    }
+
 }

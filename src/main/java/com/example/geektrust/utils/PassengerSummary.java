@@ -31,7 +31,7 @@ public class PassengerSummary implements Comparable<PassengerSummary> {
     @Override
     public int compareTo(PassengerSummary o) {
         if (this.getCount() < o.getCount()) {
-            return 1;
+            return -1;
         }
         if (this.getCount() == o.getCount()) {
             Map<String, Integer> hierarchy = new HashMap<>();
@@ -45,7 +45,7 @@ public class PassengerSummary implements Comparable<PassengerSummary> {
             return thatHierarchy - thisHierarchy;
 
         }
-        return this.getCount() - o.getCount();
+        return o.getCount() - this.getCount();
     }
 
     @Override
