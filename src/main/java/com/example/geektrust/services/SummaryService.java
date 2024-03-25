@@ -43,19 +43,26 @@ public class SummaryService implements ISummaryService {
     public void printSummary() {
 
         String answer = "";
-        for (StationType stationType : StationType.values()) {
-            CollectionSummary collectionSummary = collectionSummaries.get(stationType);
-            answer += "TOTAL_COLLECTION " + collectionSummary.getStation() + " "
-                    + collectionSummary.getTotalCollection() + " " + collectionSummary.getTotalDiscount() + "\n";
-            answer += "PASSENGER_TYPE_SUMMARY\n";
-
-            List<PassengerSummary> currentPassengers = passengerSummaries.get(stationType);
-            for (PassengerSummary passengerSummary : currentPassengers) {
-                answer += passengerSummary.getPassenger() + " " + passengerSummary.getCount() + "\n";
-            }
-        }
+        answer = getSummary(answer, StationType.CENTRAL);
+        answer = getSummary(answer, StationType.AIRPORT);
 
         System.out.println(answer);
+
+    }
+
+    public String getSummary(String answer, StationType stationType) {
+
+        CollectionSummary collectionSummary = collectionSummaries.get(stationType);
+        answer += "TOTAL_COLLECTION " + collectionSummary.getStation() + " "
+                + collectionSummary.getTotalCollection() + " " + collectionSummary.getTotalDiscount() + "\n";
+        answer += "PASSENGER_TYPE_SUMMARY\n";
+
+        List<PassengerSummary> currentPassengers = passengerSummaries.get(stationType);
+        for (PassengerSummary passengerSummary : currentPassengers) {
+            answer += passengerSummary.getPassenger() + " " + passengerSummary.getCount() + "\n";
+        }
+
+        return answer;
 
     }
 
