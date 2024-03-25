@@ -29,14 +29,16 @@ public class SummaryService implements ISummaryService {
 
         collectionSummaries = journeyService.getCollectionSummaries();
 
-        for (StationType type : StationType.values()) {
+        setSummary(StationType.CENTRAL);
+        setSummary(StationType.AIRPORT);
+    }
 
-            Map<PassangerType, PassengerSummary> map = journeyService.getPassengerSummary(type);
-            List<PassengerSummary> current = new ArrayList<>(map.values());
-            Collections.sort(current);
-            passengerSummaries.put(type, current);
+    public void setSummary(StationType type) {
+        Map<PassangerType, PassengerSummary> map = journeyService.getPassengerSummary(type);
+        List<PassengerSummary> current = new ArrayList<>(map.values());
+        Collections.sort(current);
+        passengerSummaries.put(type, current);
 
-        }
     }
 
     @Override
