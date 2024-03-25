@@ -25,7 +25,7 @@ public class FareCalculationService implements IFareCalculationService {
                 return Common.CHILD;
 
             default:
-                return 0;
+                return Common.ZERO;
         }
     }
 
